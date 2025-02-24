@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+     <None Update="AspnetCoreMvcStarterContext.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\Footer\_Footer.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\Menu\_VerticalMenu.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\Navbar\_Navbar.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\Navbar\_NavbarPartial.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_Scripts.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_ScriptsFront.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_ScriptsIncludes.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_ScriptsIncludesFront.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_Styles.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_StylesFront.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\Sections\_Variables.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_BlankLayout.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_CommonMasterLayout.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_ContentNavbarLayout.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_FrontLayout.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_HorizontalLayout.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <AdditionalFiles Include="Areas\Admin\Views\_Partials\_Macros.cshtml" />
+  </ItemGroup>
+</Project>
