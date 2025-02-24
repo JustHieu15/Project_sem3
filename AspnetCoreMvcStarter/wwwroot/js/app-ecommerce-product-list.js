@@ -20,7 +20,7 @@ $(function () {
 
   // Variable declaration for table
   var dt_product_table = $('.datatables-products'),
-    productAdd = '/Ecommerce/ProductAdd',
+    productAdd = '/Admin/Services/ServiceAdd',
     statusObj = {
       1: { title: 'Scheduled', class: 'bg-label-warning' },
       2: { title: 'Publish', class: 'bg-label-success' },
@@ -287,7 +287,7 @@ $(function () {
         {
           extend: 'collection',
           className: 'btn btn-outline-secondary dropdown-toggle me-4 waves-effect waves-light',
-          text: '<i class="ri-download-line ri-16px me-2"></i><span class="d-none d-sm-inline-block">Export </span>',
+          text: '<i class="ri-download-line ri-16px me-2"></i><span class="d-none d-sm-inline-block">Export</span>',
           buttons: [
             {
               extend: 'print',
@@ -425,7 +425,7 @@ $(function () {
           ]
         },
         {
-          text: '<i class="ri-add-line ri-16px me-0 me-sm-1_5"></i><span class="d-none d-sm-inline-block">Add Product</span>',
+          text: '<i class="ri-add-line ri-16px me-0 me-sm-1_5"></i><span class="d-none d-sm-inline-block">Add Service</span>',
           className: 'add-new btn btn-primary waves-effect waves-light',
           action: function () {
             window.location.href = productAdd;
