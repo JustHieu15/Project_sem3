@@ -82,7 +82,7 @@ $(function () {
           render: function (data, type, full, meta) {
             var $order_id = full['order'];
             // Creates full output for row
-            var $row_output = '<a href="/Ecommerce/OrderDetails"><span>#' + $order_id + '</span></a>';
+            var $row_output = '<a href="/Admin/Orders/OrderDetails"><span>#' + $order_id + '</span></a>';
             return $row_output;
           }
         },
