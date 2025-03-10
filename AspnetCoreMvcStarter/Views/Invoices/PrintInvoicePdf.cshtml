@@ -1,0 +1,77 @@
+@model AspnetCoreMvcStarter.Models.Invoices
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hóa đơn @Model.Id</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .invoice-box {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <h2>HÓA ĐƠN</h2>
+        <p><strong>Mã hóa đơn:</strong> @Model.Id</p>
+        <p><strong>Khách hàng:</strong> @Model.CustomerPhoneNumber</p>
+        <p><strong>Dịch vụ:</strong> @Model.Services.Name</p>
+        <p><strong>Ngày tạo:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</p>
+
+        <h3>Danh sách dịch vụ</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên dịch vụ</th>
+                    <th>Số lượng</th>
+                    <th>Trọng lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InvoicesItems)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Weight</td>
+                        <td class="text-right">@((item.Quantity * Model.Services.Price).ToString("C"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3 class="text-right">Tổng tiền: @Model.TotalAmount.ToString("C")</h3>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.Invoices>
+
+<h2 style="text-align: center">Danh sách hóa đơn đã gửi SMS</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Hóa đơn</th>
+            <th>Số điện thoại khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Thời gian gửi</th>
+            <th>Nội dung SMS</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            var smsLog = invoice.Smslogs.FirstOrDefault(s => s.Status == 1); // Lấy tin nhắn gần nhất
+
+            <tr>
+                <td>@invoice.Id</td>
+                <td>@invoice.CustomerPhoneNumber</td>
+                <td>@invoice.TotalAmount VNĐ</td>
+                <td>@(smsLog != null ? smsLog.SentdAt.ToString("dd/MM/yyyy HH:mm") : "Chưa gửi")</td>
+                <td>@(smsLog != null ? smsLog.Message : "Không có tin nhắn")</td>
+            </tr>
+        }
+    </tbody>
+</table>

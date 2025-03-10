@@ -1,0 +1,112 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.Invoices>
+
+@{
+    ViewData["Title"] = "Danh sách hóa đơn";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+    <link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+}
+
+
+<h2 class="text-center">Danh sách hóa đơn</h2>
+
+<!-- Filter Form -->
+<form method="get" class="mb-3">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <input type="text" name="searchPhone" class="form-control" placeholder="Tìm theo SĐT"
+                   value="@ViewBag.SearchPhone">
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-control">
+                <option value="">-- Trạng thái --</option>
+                <option value="0" selected="@(ViewBag.Status == 0)">Chưa bắt đầu</option>
+                <option value="1" selected="@(ViewBag.Status == 1)">Đang thực hiện</option>
+                <option value="2" selected="@(ViewBag.Status == 2)">Đã hoàn thành</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="statusPayment" class="form-control">
+                <option value="">-- Trạng thái thanh toán --</option>
+                <option value="0" selected="@(ViewBag.StatusPayment == 0)">Chưa thanh toán</option>
+                <option value="1" selected="@(ViewBag.StatusPayment == 1)">Đã thanh toán</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Lọc</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+            <a href="@Url.Action("Create")" class="btn btn-success">Tạo hóa đơn</a>
+        </div>
+    </div>
+</form>
+
+<!-- Order List Table -->
+<div class="card">
+    <div class="card-datatable table-responsive">
+        <table class="table datatables-order">
+            <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Số điện thoại</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thanh toán</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invoice in Model)
+                {
+                    <tr>
+                        <td>@invoice.Id</td>
+                        <td>@invoice.CustomerPhoneNumber</td>
+                        <td>@invoice.TotalAmount.ToString("C")</td>
+                        <td>
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@invoice.Id" />
+                                <select name="status" class="form-control">
+                                    <option value="0" selected="@(invoice.Status == 0)">Chưa bắt đầu</option>
+                                    <option value="1" selected="@(invoice.Status == 1)">Đang thực hiện</option>
+                                    <option value="2" selected="@(invoice.Status == 2)">Đã hoàn thành</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
+                            </form>
+                        </td>
+                        <td>@(invoice.StatusPayment == 0 ? "Chưa thanh toán" : "Đã thanh toán")</td>
+                        <td>@invoice.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Invoices", new { id = invoice.Id })" class="btn btn-info">Chi tiết</a>
+                            @if (invoice.StatusPayment == 0)
+                            {
+                                <form method="post" action="@Url.Action("PayInvoice", "Invoices")" class="d-inline">
+                                    <input type="hidden" name="id" value="@invoice.Id" />
+                                    <button type="submit" class="btn btn-success">Thanh toán</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Pagination -->
+@if (ViewBag.TotalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { searchPhone = ViewBag.SearchPhone, status = ViewBag.Status, statusPayment = ViewBag.StatusPayment, page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

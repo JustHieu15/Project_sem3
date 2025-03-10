@@ -1,0 +1,31 @@
+@model AspnetCoreMvcStarter.Models.Services
+
+@{
+    ViewData["Title"] = "Create Service";
+}
+
+<h2 style="text-align:center">Create Service</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Create</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</form>

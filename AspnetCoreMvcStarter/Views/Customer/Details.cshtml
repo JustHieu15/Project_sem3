@@ -1,0 +1,17 @@
+@model AspnetCoreMvcStarter.Models.User
+
+@{
+    ViewData["Title"] = "Chi tiết khách hàng";
+}
+
+<h2>Chi tiết khách hàng</h2>
+
+<div>
+    <p><strong>Tên:</strong> @Model.Name</p>
+    <p><strong>Địa chỉ:</strong> @Model.Address</p>
+    <p><strong>Điện thoại:</strong> @Model.Phone</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa</a>
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

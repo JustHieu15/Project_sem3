@@ -1,0 +1,54 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.Invoices>
+
+<h2 style="text-align: center">Danh sách hóa đơn chờ gửi SMS</h2>
+
+@if (!string.IsNullOrEmpty(Context.Request.Query["message"]))
+{
+    <div id="alert-container" class="alert alert-success">
+        @Context.Request.Query["message"]
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertContainer = document.getElementById("alert-container");
+        if (alertContainer) {
+            setTimeout(function () {
+                alertContainer.style.transition = "opacity 0.5s ease";
+                alertContainer.style.opacity = "0";
+                setTimeout(function () {
+                    alertContainer.style.display = "none";
+                }, 500);
+            }, 3000);
+        }
+    });
+</script>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Hóa đơn</th>
+            <th>Số điện thoại khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.Id</td>
+                <td>@invoice.CustomerPhoneNumber</td>
+                <td>@invoice.TotalAmount VNĐ</td>
+                <td>
+                    <form asp-action="SendSms" asp-controller="Sms" method="post">
+                        <input type="hidden" name="id" value="@invoice.Id" />
+                        <button type="submit" class="btn btn-success">Gửi SMS</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
