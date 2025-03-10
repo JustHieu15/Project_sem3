@@ -1,0 +1,29 @@
+@model List<AspnetCoreMvcStarter.Models.ViewModel.ServiceRevenueViewModel>
+
+@{
+    ViewData["Title"] = "Báo cáo doanh thu theo dịch vụ";
+}
+
+<h2>Báo cáo Doanh Thu Dịch Vụ</h2>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên dịch vụ</th>
+            <th>Giá dịch vụ</th>
+            <th>Số lần sử dụng</th>
+            <th>Tổng doanh thu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ServiceName</td>
+                <td>@item.ServicePrice.ToString("C")</td>
+                <td>@item.UsageCount</td>
+                <td>@item.TotalRevenue.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
