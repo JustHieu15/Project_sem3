@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="QuestPDF" Version="2025.1.5" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="Twilio" Version="7.8.5" />
+    <PackageReference Include="X.PagedList" Version="10.5.7" />
+    <PackageReference Include="ZXing.Net" Version="0.16.10" />
+     <None Update="AspnetCoreMvcStarterContext.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Shared\Error.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\Footer\_Footer.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\Menu\_HorizontalMenu.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\Menu\_VerticalMenu.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\Navbar\_Navbar.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\Navbar\_NavbarPartial.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_Scripts.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_ScriptsFront.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_ScriptsIncludes.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_ScriptsIncludesFront.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_Styles.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_StylesFront.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Sections\_Variables.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_BlankLayout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_CommonMasterLayout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_ContentNavbarLayout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_FrontLayout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_HorizontalLayout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <AdditionalFiles Include="Views\_Partials\_Macros.cshtml" />
+  </ItemGroup>
+</Project>

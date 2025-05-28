@@ -1,0 +1,134 @@
+@{
+  TempData.Keep();
+  string? currentPage =  ViewContext.HttpContext.Request.Path;
+}
+
+<!-- Menu -->
+@* ! Do this simple *@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+  @* ! Hide app brand if navbar-full *@
+  <div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
+    <a asp-controller="Home" asp-action="Index" class="app-brand-link">
+      <span class="app-brand-logo demo me-1">@await Html.PartialAsync("../_Partials/_Macros")</span>
+      <span class="app-brand-text demo menu-text fw-semibold ms-2">@TempData.Peek("appName")</span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+      <i class="menu-toggle-icon d-xl-block align-middle"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  @* ! Starter Kit menu-items *@
+  <ul class="menu-inner py-1">
+        <li class='menu-item@(currentPage.EndsWith("/") ? " active" : "")'>
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons ri-home-smile-line"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+            </a>
+        </li>
+    <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
+      <a asp-area="Admin" asp-controller="Services"  class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons ri-store-3-line"></i>
+        <div data-i18n="Services">Services</div>
+      </a>
+      <ul class='menu-sub'>
+        <li class='menu-item@(currentPage == "/Services" ? " active" : "")'>
+          <a asp-controller="Services" asp-action="Index" class="menu-link">
+            <div data-i18n='Service List'>Service List</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/Services/Create" ? " active" : "")'>
+          <a asp-controller="Services" asp-action="Create" class="menu-link">
+            <div data-i18n='Add Service'>Add Service</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
+      <a href='javascript:void(0);' class='menu-link menu-toggle'>
+        <i class="menu-icon tf-icons ri-survey-line"></i>
+                <div data-i18n='Invoices'>Invoices</div>
+      </a>
+      <ul class='menu-sub'>
+                <li class='menu-item@(currentPage == "/Invoices/InvoicesList" ? " active" : "")'>
+                    <a asp-controller="Invoices" asp-action="Index" class="menu-link">
+                        <div data-i18n='Invoices List'>Invoices List</div>
+          </a>
+        </li>
+                <li class='menu-item@(currentPage == "/Invoices/InvoicesDetails" ? " active" : "")'>
+                    <a asp-controller="Invoices" asp-action="Create" class="menu-link">
+                        <div data-i18n='Create Invoices'>Create Invoices</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+        <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
+            <a href='javascript:void(0);' class='menu-link menu-toggle'>
+                <i class="menu-icon tf-icons ri-survey-line"></i>
+                <div data-i18n='Sms'>Sms</div>
+            </a>
+            <ul class='menu-sub'>
+                <li class='menu-item@(currentPage == "/Sms/Index" ? " active" : "")'>
+                    <a asp-controller="Sms" asp-action="Index" class="menu-link">
+                        <div data-i18n='Sms List'>Sms List</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/Sms/Sent Invoices" ? " active" : "")'>
+                    <a asp-controller="Sms" asp-action="SentInvoices" class="menu-link">
+                        <div data-i18n='Sent Invoices'>Sent Invoices</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
+            <a href='javascript:void(0);' class='menu-link menu-toggle'>
+                <i class="menu-icon tf-icons ri-survey-line"></i>
+                <div data-i18n='Customers'>Customers</div>
+            </a>
+            <ul class='menu-sub'>
+                <li class='menu-item@(currentPage == "/Sms/Index" ? " active" : "")'>
+                    <a asp-controller="Customer" asp-action="Index" class="menu-link">
+                        <div data-i18n='Customer List'>Customer List</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/Sms/Sent Invoices" ? " active" : "")'>
+                    <a asp-controller="Customer" asp-action="Create" class="menu-link">
+                        <div data-i18n='Create Customer'>Create Customer</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- User Management Section -->
+        <li class='menu-item@(currentPage.Contains("/User") ? " active open " : "")'>
+            <a href='javascript:void(0);' class='menu-link menu-toggle'>
+                <i class="menu-icon tf-icons ri-user-settings-line"></i>
+                <div data-i18n='User Management'>Quản lý Người dùng</div>
+            </a>
+            <ul class='menu-sub'>
+                <li class='menu-item@(currentPage == "/User" || currentPage == "/User/Index" ? " active" : "")'>
+                    <a asp-controller="User" asp-action="Index" class="menu-link">
+                        <div data-i18n='User List'>Danh sách Người dùng</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/User/Create" ? " active" : "")'>
+                    <a asp-controller="User" asp-action="Create" class="menu-link">
+                        <div data-i18n='Create User'>Tạo Người dùng</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+    <li class='menu-item@(currentPage.EndsWith("/") ? " active open" : "")'>
+            <a asp-controller="Reports" asp-action="ServiceRevenue" class="menu-link">
+        <i class="menu-icon tf-icons ri-file-chart-line"></i>
+        <div data-i18n="Reports">Reports</div>
+      </a>
+    </li>
+  </ul>
+
+</aside>
+<!-- / Menu -->

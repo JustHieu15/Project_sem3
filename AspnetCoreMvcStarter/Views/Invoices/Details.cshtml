@@ -1,0 +1,83 @@
+@model AspnetCoreMvcStarter.Models.Invoices
+
+<h2>Chi tiết hóa đơn</h2>
+
+<div>
+    <p><strong>Số điện thoại khách hàng:</strong> @Model.CustomerPhoneNumber</p>
+    <p><strong>Mã Barcode:</strong> @Model.BarCode</p>
+    <p><strong>Tổng tiền:</strong> @Model.TotalAmount VNĐ</p>
+    <p><strong>Dịch vụ:</strong> @Model.Services.Name</p>
+</div>
+
+@if (Model.StatusPayment == 0)
+{
+    <h3>Thêm item</h3>
+    <form asp-action="AddInvoiceItem" method="post">
+        <input type="hidden" name="invoiceId" value="@Model.Id" />
+        <div class="form-group">
+            <label for="itemName">Tên dịch vụ</label>
+            <input type="text" name="itemName" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="number" name="quantity" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="weight">Trọng lượng</label>
+            <input type="number" name="weight" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Thêm</button>
+    </form>
+}
+
+<h3>Danh sách item</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên item</th>
+            <th>Số lượng</th>
+            <th>Trọng lượng</th>
+            @if (Model.StatusPayment == 0)
+            {
+                <th>Hành động</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.InvoicesItems)
+        {
+            <tr>
+                @if (Model.StatusPayment == 0)
+                {
+                    <form asp-action="EditInvoiceItem" method="post">
+                    <td>@item.ItemName</td>
+                    <td>
+                        <input type="hidden" name="itemId" value="@item.Id" />
+                        <input type="number" name="quantity" value="@item.Quantity" class="form-control" required />
+                    </td>
+                    <td>
+                        <input type="number" name="weight" value="@item.Weight" class="form-control" required />
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </td>
+                    </form>
+                    <td>
+                        <form asp-action="DeleteInvoiceItem" method="post">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>@item.ItemName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Weight</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
