@@ -1,5 +1,3 @@
-using AspnetCoreMvcStarter.Areas.Admin.Context;
-using AspnetCoreMvcStarter.Extend;
 using AspnetCoreMvcStarter.Models;
 using Microsoft.EntityFrameworkCore;
 

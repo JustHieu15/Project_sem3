@@ -1,7 +1,7 @@
-using AspnetCoreMvcStarter.Areas.Admin.Context;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using AspnetCoreMvcStarter.Context;
 
 namespace AspnetCoreMvcStarter.Controllers
 {
