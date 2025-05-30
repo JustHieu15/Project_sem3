@@ -1,13 +1,17 @@
+@using AspnetCoreMvcStarter.Models
 @{
+
   TempData.Keep();
-  string? currentPage =  ViewContext.HttpContext.Request.Path;
+  string? currentPage = ViewContext.HttpContext.Request.Path.Value;
+  string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+  string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+  // Lấy vai trò người dùng từ Session
+  string? currentUserRole = ViewContext.HttpContext.Session.GetString("UserRole");
 }
 
 <!-- Menu -->
-@* ! Do this simple *@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
-  @* ! Hide app brand if navbar-full *@
   <div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
     <a asp-controller="Home" asp-action="Index" class="app-brand-link">
       <span class="app-brand-logo demo me-1">@await Html.PartialAsync("../_Partials/_Macros")</span>
@@ -21,114 +25,124 @@
 
   <div class="menu-inner-shadow"></div>
 
-  @* ! Starter Kit menu-items *@
   <ul class="menu-inner py-1">
-        <li class='menu-item@(currentPage.EndsWith("/") ? " active" : "")'>
-            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="menu-link">
-                <i class="menu-icon tf-icons ri-home-smile-line"></i>
-                <div data-i18n="Dashboard">Dashboard</div>
-            </a>
-        </li>
-    <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
-      <a asp-area="Admin" asp-controller="Services"  class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons ri-store-3-line"></i>
-        <div data-i18n="Services">Services</div>
-      </a>
-      <ul class='menu-sub'>
-        <li class='menu-item@(currentPage == "/Services" ? " active" : "")'>
-          <a asp-controller="Services" asp-action="Index" class="menu-link">
-            <div data-i18n='Service List'>Service List</div>
-          </a>
-        </li>
-        <li class='menu-item@(currentPage == "/Services/Create" ? " active" : "")'>
-          <a asp-controller="Services" asp-action="Create" class="menu-link">
-            <div data-i18n='Add Service'>Add Service</div>
-          </a>
-        </li>
-      </ul>
+    <!-- Dashboard -->
+    <li class='menu-item@(currentController.Equals("Home", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) || currentController.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+        <a asp-controller="Home" asp-action="Index" class="menu-link">
+            <i class="menu-icon tf-icons ri-home-smile-line"></i>
+            <div>Dashboard</div>
+        </a>
     </li>
-    <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
-      <a href='javascript:void(0);' class='menu-link menu-toggle'>
-        <i class="menu-icon tf-icons ri-survey-line"></i>
-                <div data-i18n='Invoices'>Invoices</div>
-      </a>
-      <ul class='menu-sub'>
-                <li class='menu-item@(currentPage == "/Invoices/InvoicesList" ? " active" : "")'>
-                    <a asp-controller="Invoices" asp-action="Index" class="menu-link">
-                        <div data-i18n='Invoices List'>Invoices List</div>
-          </a>
-        </li>
-                <li class='menu-item@(currentPage == "/Invoices/InvoicesDetails" ? " active" : "")'>
-                    <a asp-controller="Invoices" asp-action="Create" class="menu-link">
-                        <div data-i18n='Create Invoices'>Create Invoices</div>
-          </a>
-        </li>
-      </ul>
-    </li>
-        <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
-            <a href='javascript:void(0);' class='menu-link menu-toggle'>
-                <i class="menu-icon tf-icons ri-survey-line"></i>
-                <div data-i18n='Sms'>Sms</div>
-            </a>
-            <ul class='menu-sub'>
-                <li class='menu-item@(currentPage == "/Sms/Index" ? " active" : "")'>
-                    <a asp-controller="Sms" asp-action="Index" class="menu-link">
-                        <div data-i18n='Sms List'>Sms List</div>
-                    </a>
-                </li>
-                <li class='menu-item@(currentPage == "/Sms/Sent Invoices" ? " active" : "")'>
-                    <a asp-controller="Sms" asp-action="SentInvoices" class="menu-link">
-                        <div data-i18n='Sent Invoices'>Sent Invoices</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class='menu-item@(currentPage.EndsWith("/") ? " active open " : "")'>
-            <a href='javascript:void(0);' class='menu-link menu-toggle'>
-                <i class="menu-icon tf-icons ri-survey-line"></i>
-                <div data-i18n='Customers'>Customers</div>
-            </a>
-            <ul class='menu-sub'>
-                <li class='menu-item@(currentPage == "/Sms/Index" ? " active" : "")'>
-                    <a asp-controller="Customer" asp-action="Index" class="menu-link">
-                        <div data-i18n='Customer List'>Customer List</div>
-                    </a>
-                </li>
-                <li class='menu-item@(currentPage == "/Sms/Sent Invoices" ? " active" : "")'>
-                    <a asp-controller="Customer" asp-action="Create" class="menu-link">
-                        <div data-i18n='Create Customer'>Create Customer</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
 
-        <!-- User Management Section -->
-        <li class='menu-item@(currentPage.Contains("/User") ? " active open " : "")'>
+    <!-- Quản lý Phòng ban -->
+    @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy
+    {
+    <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
+      <a href='javascript:void(0);' class='menu-link menu-toggle'>
+        <i class="menu-icon tf-icons ri-building-4-line"></i>
+        <div>Quản lý Phòng ban</div>
+      </a>
+      <ul class='menu-sub'>
+        <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="Department" asp-action="Index" class="menu-link">
+            <div>Danh sách Phòng ban</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="Department" asp-action="Create" class="menu-link">
+            <div>Thêm Phòng ban</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    }
+
+    <!-- Quản lý Công việc KPI -->
+    <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) || currentController.Equals("TaskUpdate", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
+      <a href='javascript:void(0);' class='menu-link menu-toggle'>
+        <i class="menu-icon tf-icons ri-task-line"></i>
+        <div>Quản lý Công việc KPI</div>
+      </a>
+      <ul class='menu-sub'>
+        @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy danh sách tổng
+        {
+        <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="KpiTask" asp-action="Index" class="menu-link">
+            <div>Danh sách Công việc</div>
+          </a>
+        </li>
+        }
+         <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyTasks", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="KpiTask" asp-action="MyTasks" class="menu-link">
+            <div>Công việc của tôi</div>
+          </a>
+        </li>
+         @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString()) // Admin hoặc Leader có thể giao việc
+        {
+        <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="KpiTask" asp-action="Create" class="menu-link">
+            <div>Giao việc mới</div>
+          </a>
+        </li>
+        }
+      </ul>
+    </li>
+
+    <!-- Báo cáo KPI tháng -->
+     <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
+      <a href='javascript:void(0);' class='menu-link menu-toggle'>
+        <i class="menu-icon tf-icons ri-file-chart-2-line"></i>
+        <div>Báo cáo KPI Tháng</div>
+      </a>
+      <ul class='menu-sub'>
+        @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString()) // Admin/Leader xem báo cáo chung
+        {
+        <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="MonthlyKpiReport" asp-action="Index" class="menu-link">
+            <div>Xem/Tạo Báo cáo</div>
+          </a>
+        </li>
+        }
+         <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyReport", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="MonthlyKpiReport" asp-action="MyReport" class="menu-link">
+            <div>Báo cáo cá nhân</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Quản lý Người dùng -->
+    @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy mục này
+    {
+        <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
             <a href='javascript:void(0);' class='menu-link menu-toggle'>
                 <i class="menu-icon tf-icons ri-user-settings-line"></i>
-                <div data-i18n='User Management'>Quản lý Người dùng</div>
+                <div>Quản lý Người dùng</div>
             </a>
             <ul class='menu-sub'>
-                <li class='menu-item@(currentPage == "/User" || currentPage == "/User/Index" ? " active" : "")'>
+                <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && (currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(currentAction)) ? " active" : "")'>
                     <a asp-controller="User" asp-action="Index" class="menu-link">
-                        <div data-i18n='User List'>Danh sách Người dùng</div>
+                        <div>Danh sách Người dùng</div>
                     </a>
                 </li>
-                <li class='menu-item@(currentPage == "/User/Create" ? " active" : "")'>
+                <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
                     <a asp-controller="User" asp-action="Create" class="menu-link">
-                        <div data-i18n='Create User'>Tạo Người dùng</div>
+                        <div>Tạo Người dùng</div>
                     </a>
                 </li>
             </ul>
         </li>
+    }
 
-    <li class='menu-item@(currentPage.EndsWith("/") ? " active open" : "")'>
-            <a asp-controller="Reports" asp-action="ServiceRevenue" class="menu-link">
-        <i class="menu-icon tf-icons ri-file-chart-line"></i>
-        <div data-i18n="Reports">Reports</div>
-      </a>
+    @* Reports (Tổng hợp khác nếu có) *@
+    @*
+    <li class='menu-item@(currentController.Equals("Reports", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+        <a asp-controller="Reports" asp-action="ServiceRevenue" class="menu-link">
+            <i class="menu-icon tf-icons ri-file-chart-line"></i>
+            <div>Báo cáo Khác</div>
+        </a>
     </li>
+    *@
   </ul>
-
 </aside>
 <!-- / Menu -->

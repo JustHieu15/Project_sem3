@@ -5,82 +5,87 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0076cfeb-3894-49b4-877e-ffa1cc85da67" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projectSettingsUpdater.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/CustomerController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/InvoicesController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/ReportsController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/ServicesController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/SmsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DashboardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DashboardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/OrdersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Extend/InvoiceDocument.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Invoices.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/InvoicesItem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Services.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/SmsLogs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250304074821_Intial_Create_01.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250304074821_Intial_Create_01.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250304155512_Initial.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250304155512_Initial.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305000450_Inittial_Create_02.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305000450_Inittial_Create_02.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305015058_Inittial_Create_03.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305015058_Inittial_Create_03.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305070958_Initial_Create_04.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305070958_Initial_Create_04.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305105947_Initial_Create_05.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250305105947_Initial_Create_05.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250310002241_Initial_Create_06.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250310002241_Initial_Create_06.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250310013153_Initial_Create_07.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250310013153_Initial_Create_07.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UpdateStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UpdateStatus.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/ServiceRevenueViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/ServiceRevenueViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Invoices/AddInvoiceItem.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Invoices/Create.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Invoices/Details.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Invoices/Index.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Invoices/PrintInvoicePdf.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Orders/OrderList.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Reports/ServiceRevenue.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/Create.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/Delete.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/Details.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/Edit.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/Index.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/ServiceAdd.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/ServiceCategoryList.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Services/ServiceList.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Sms/Index.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Sms/SentInvoices.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Folder.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Folder.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AdminBaseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DashboardController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Extend/AuthAttribute.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250304074821_Intial_Create_01.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/ApplicationDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Department.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/KpiTask.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/MonthlyKpiReport.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskStatus.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/MonthlyKpiReport.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskUpdate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UpdateStatus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/ServiceRevenueViewModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/ServiceRevenueViewModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/FormValidation/Validation.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Orders/OrderDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_HorizontalMenu.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Navbar/_Navbar.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Navbar/_NavbarPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/_Styles.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_ContentNavbarLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_FrontLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_Partials/_Macros.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_Partials/_Modals/ModalCreateApp.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -100,10 +105,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/ADMIN/RiderProjects/Project_sem3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -133,6 +140,7 @@
       <workItem from="1748169767201" duration="5685000" />
       <workItem from="1748448294185" duration="9870000" />
       <workItem from="1748489973883" duration="472000" />
+      <workItem from="1748490494748" duration="8627000" />
     </task>
     <servers />
   </component>

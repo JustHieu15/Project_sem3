@@ -1,4 +1,6 @@
-namespace DefaultNamespace
+using System.ComponentModel.DataAnnotations;
+
+namespace AspnetCoreMvcStarter.Models
 {
   public enum UpdateStatus
   {

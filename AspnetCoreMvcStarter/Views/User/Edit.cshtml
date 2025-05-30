@@ -2,17 +2,24 @@
 @using AspnetCoreMvcStarter.Models
 
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Chỉnh sửa Người dùng";
+    var currentUserRole = ViewContext.HttpContext.Session.GetString("UserRole");
+    bool isAdmin = currentUserRole == UserRole.Admin.ToString();
 }
 
 <div class="container mt-4">
     <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Tạo Người Dùng Mới</h4>
+        <div class="card-header bg-warning text-dark"> @* Thay đổi màu header *@
+            <h4 class="mb-0">Chỉnh sửa Thông tin Người dùng: @Model.Name</h4>
         </div>
         <div class="card-body" style="margin-top: 20px">
-            <form asp-action="Create" method="post">
+            <form asp-action="Edit" asp-route-id="@Model.Id" method="post"> @* asp-route-id *@
                 @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" /> @* Thêm input ẩn cho Id *@
+                <input type="hidden" asp-for="CreatedDate" /> @* Giữ lại CreatedDate *@
+                @if(!isAdmin) { <input type="hidden" asp-for="Role" /> <input type="hidden" asp-for="IsActive" /> } @* Nếu không phải admin, giữ lại Role và IsActive hiện tại *@
+
+
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
@@ -35,20 +42,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Password" class="form-label fw-semibold">Mật khẩu</label>
-                            <input asp-for="Password" type="password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <label for="newPassword" class="form-label fw-semibold">Mật khẩu mới (để trống nếu không đổi)</label>
+                            <input name="newPassword" id="newPassword" type="password" class="form-control" />
+                            @* Không cần validation cho newPassword ở đây, vì nó là tùy chọn *@
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label asp-for="Role" class="form-label fw-semibold">Chức vụ</label>
-                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select">
-                                <option value="">-- Chọn chức vụ --</option>
-                            </select>
-                            <span asp-validation-for="Role" class="text-danger"></span>
+                    @if (isAdmin) // Chỉ hiển thị cho Admin
+                    {
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Role" class="form-label fw-semibold">Chức vụ</label>
+                                <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select">
+                                    <option value="">-- Chọn chức vụ --</option>
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <div class="row">
@@ -69,6 +79,16 @@
                         </div>
                     </div>
                 </div>
+                 @if (isAdmin) // Chỉ hiển thị cho Admin
+                {
+                    <div class="form-group mb-3">
+                        <div class="form-check">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsActive" class="form-check-label">Kích hoạt tài khoản</label>
+                        </div>
+                    </div>
+                }
+
 
                 <div class="form-group mb-3">
                     <label asp-for="Address" class="form-label fw-semibold">Địa chỉ</label>
@@ -77,8 +97,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Tạo người dùng
+                    <button type="submit" class="btn btn-warning"> @* Thay đổi màu nút *@
+                        <i class="fas fa-save"></i> Lưu thay đổi
                     </button>
                     <a asp-action="Index" class="btn btn-secondary ms-2">
                         <i class="fas fa-arrow-left"></i> Quay lại danh sách
@@ -88,3 +108,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

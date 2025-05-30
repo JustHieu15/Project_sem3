@@ -34,6 +34,11 @@ namespace AspnetCoreMvcStarter.Models
     [Display(Name = "Phòng ban")]
     public int? DepartmentId { get; set; }
 
+    // THÊM THUỘC TÍNH NÀY VÀO
+    [Required] // Hoặc bỏ [Required] nếu vai trò có thể là null ban đầu
+    [Display(Name = "Vai trò")]
+    public UserRole Role { get; set; } // Sử dụng enum UserRole đã định nghĩa
+
     [Display(Name = "Ngày tạo tài khoản")]
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 

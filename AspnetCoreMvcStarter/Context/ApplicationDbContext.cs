@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AspnetCoreMvcStarter.Models;
-using AspnetCoreMvcStarter.Models;
 
-namespace AspnetCoreMvcStarter.Areas.Admin.Context
+namespace AspnetCoreMvcStarter.Context
 {
     public class ApplicationDbContext : DbContext
     {
