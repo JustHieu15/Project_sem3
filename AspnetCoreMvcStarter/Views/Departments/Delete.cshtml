@@ -1,0 +1,40 @@
+@model AspnetCoreMvcStarter.Models.Department
+@using AspnetCoreMvcStarter.Models
+
+@{
+  ViewData["Title"] = "Delete Department";
+}
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-danger text-white">
+      <h4 class="mb-0">Xóa Phòng Ban: @Model.Name</h4>
+    </div>
+    <div class="card-body">
+      <h5>Bạn có chắc chắn muốn xóa phòng ban này?</h5>
+      <p class="text-danger">Hành động này không thể hoàn tác.</p>
+
+      <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Code)</dt>
+        <dd class="col-sm-9">@(Model.Code ?? "N/A")</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-sm-9">@(Model.Description ?? "N/A")</dd>
+      </dl>
+
+      <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-trash"></i> Xóa
+        </button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">
+          <i class="fas fa-arrow-left"></i> Hủy
+        </a>
+      </form>
+    </div>
+  </div>
+</div>

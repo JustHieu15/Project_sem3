@@ -1,6 +1,5 @@
 @using AspnetCoreMvcStarter.Models
 @{
-
   TempData.Keep();
   string? currentPage = ViewContext.HttpContext.Request.Path.Value;
   string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
@@ -11,15 +10,13 @@
 
 <!-- Menu -->
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-
-  <div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
+  <div class='app-brand demo @((ViewData["navbarFull"] != null && Convert.ToBoolean(ViewData["navbarFull"])) ? "d-xl-none" : "")'>
     <a asp-controller="Home" asp-action="Index" class="app-brand-link">
       <span class="app-brand-logo demo me-1">@await Html.PartialAsync("../_Partials/_Macros")</span>
       <span class="app-brand-text demo menu-text fw-semibold ms-2">@TempData.Peek("appName")</span>
     </a>
-
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-      <i class="menu-toggle-icon d-xl-block align-middle"></i>
+      <i class="menu-icon tf-icons ri-menu-2-line"></i>
     </a>
   </div>
 
@@ -27,84 +24,83 @@
 
   <ul class="menu-inner py-1">
     <!-- Dashboard -->
-    <li class='menu-item@(currentController.Equals("Home", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) || currentController.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-        <a asp-controller="Home" asp-action="Index" class="menu-link">
-            <i class="menu-icon tf-icons ri-home-smile-line"></i>
-            <div>Dashboard</div>
-        </a>
+    <li class='menu-item@(currentController.Equals("Home", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+      <a asp-controller="Home" asp-action="Index" class="menu-link">
+        <i class="menu-icon tf-icons ri-home-smile-line"></i>
+        <div>Dashboard</div>
+      </a>
     </li>
 
     <!-- Quản lý Phòng ban -->
-    @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy
+    @if (currentUserRole == UserRole.Admin.ToString())
     {
-    <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
-      <a href='javascript:void(0);' class='menu-link menu-toggle'>
-        <i class="menu-icon tf-icons ri-building-4-line"></i>
-        <div>Quản lý Phòng ban</div>
-      </a>
-      <ul class='menu-sub'>
-        <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="Department" asp-action="Index" class="menu-link">
-            <div>Danh sách Phòng ban</div>
-          </a>
-        </li>
-        <li class='menu-item@(currentController.Equals("Department", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="Department" asp-action="Create" class="menu-link">
-            <div>Thêm Phòng ban</div>
-          </a>
-        </li>
-      </ul>
-    </li>
+      <li class='menu-item@(currentController.Equals("Departments", StringComparison.OrdinalIgnoreCase) ? " active open" : "")'>
+        <a href='javascript:void(0);' class='menu-link menu-toggle'>
+          <i class="menu-icon tf-icons ri-building-4-line"></i>
+          <div>Quản lý Phòng ban</div>
+        </a>
+        <ul class='menu-sub'>
+          <li class='menu-item@(currentController.Equals("Departments", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="Departments" asp-action="Index" class="menu-link">
+              <div>Danh sách Phòng ban</div>
+            </a>
+          </li>
+          <li class='menu-item@(currentController.Equals("Departments", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="Departments" asp-action="Create" class="menu-link">
+              <div>Thêm Phòng ban</div>
+            </a>
+          </li>
+        </ul>
+      </li>
     }
 
     <!-- Quản lý Công việc KPI -->
-    <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) || currentController.Equals("TaskUpdate", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
+    <li class='menu-item@(currentController.Equals("KpiTasks", StringComparison.OrdinalIgnoreCase) ? " active open" : "")'>
       <a href='javascript:void(0);' class='menu-link menu-toggle'>
         <i class="menu-icon tf-icons ri-task-line"></i>
         <div>Quản lý Công việc KPI</div>
       </a>
       <ul class='menu-sub'>
-        @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy danh sách tổng
         {
-        <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="KpiTask" asp-action="Index" class="menu-link">
-            <div>Danh sách Công việc</div>
-          </a>
-        </li>
+          <li class='menu-item@(currentController.Equals("KpiTasks", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="KpiTasks" asp-action="Index" class="menu-link">
+              <div>Danh sách Công việc</div>
+            </a>
+          </li>
         }
-         <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyTasks", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="KpiTask" asp-action="MyTasks" class="menu-link">
+        <li class='menu-item@(currentController.Equals("KpiTasks", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyTasks", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="KpiTasks" asp-action="MyTasks" class="menu-link">
             <div>Công việc của tôi</div>
           </a>
         </li>
-         @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString()) // Admin hoặc Leader có thể giao việc
+        @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString())
         {
-        <li class='menu-item@(currentController.Equals("KpiTask", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="KpiTask" asp-action="Create" class="menu-link">
-            <div>Giao việc mới</div>
-          </a>
-        </li>
+          <li class='menu-item@(currentController.Equals("KpiTasks", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="KpiTasks" asp-action="Create" class="menu-link">
+              <div>Giao việc mới</div>
+            </a>
+          </li>
         }
       </ul>
     </li>
 
     <!-- Báo cáo KPI tháng -->
-     <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
+    <li class='menu-item@(currentController.Equals("KpiReports", StringComparison.OrdinalIgnoreCase) ? " active open" : "")'>
       <a href='javascript:void(0);' class='menu-link menu-toggle'>
         <i class="menu-icon tf-icons ri-file-chart-2-line"></i>
         <div>Báo cáo KPI Tháng</div>
       </a>
       <ul class='menu-sub'>
-        @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString()) // Admin/Leader xem báo cáo chung
+        @if (currentUserRole == UserRole.Admin.ToString() || currentUserRole == UserRole.Leader.ToString())
         {
-        <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="MonthlyKpiReport" asp-action="Index" class="menu-link">
-            <div>Xem/Tạo Báo cáo</div>
-          </a>
-        </li>
+          <li class='menu-item@(currentController.Equals("KpiReports", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="KpiReports" asp-action="Index" class="menu-link">
+              <div>Xem/Tạo Báo cáo</div>
+            </a>
+          </li>
         }
-         <li class='menu-item@(currentController.Equals("MonthlyKpiReport", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyReport", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-          <a asp-controller="MonthlyKpiReport" asp-action="MyReport" class="menu-link">
+        <li class='menu-item@(currentController.Equals("KpiReports", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("MyReport", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+          <a asp-controller="KpiReports" asp-action="MyReport" class="menu-link">
             <div>Báo cáo cá nhân</div>
           </a>
         </li>
@@ -112,37 +108,27 @@
     </li>
 
     <!-- Quản lý Người dùng -->
-    @if (currentUserRole == UserRole.Admin.ToString()) // Chỉ Admin thấy mục này
+    @if (currentUserRole == UserRole.Admin.ToString())
     {
-        <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) ? " active open " : "")'>
-            <a href='javascript:void(0);' class='menu-link menu-toggle'>
-                <i class="menu-icon tf-icons ri-user-settings-line"></i>
-                <div>Quản lý Người dùng</div>
-            </a>
-            <ul class='menu-sub'>
-                <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && (currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(currentAction)) ? " active" : "")'>
-                    <a asp-controller="User" asp-action="Index" class="menu-link">
-                        <div>Danh sách Người dùng</div>
-                    </a>
-                </li>
-                <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-                    <a asp-controller="User" asp-action="Create" class="menu-link">
-                        <div>Tạo Người dùng</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-    }
-
-    @* Reports (Tổng hợp khác nếu có) *@
-    @*
-    <li class='menu-item@(currentController.Equals("Reports", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
-        <a asp-controller="Reports" asp-action="ServiceRevenue" class="menu-link">
-            <i class="menu-icon tf-icons ri-file-chart-line"></i>
-            <div>Báo cáo Khác</div>
+      <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) ? " active open" : "")'>
+        <a href='javascript:void(0);' class='menu-link menu-toggle'>
+          <i class="menu-icon tf-icons ri-user-settings-line"></i>
+          <div>Quản lý Người dùng</div>
         </a>
-    </li>
-    *@
+        <ul class='menu-sub'>
+          <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && (currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(currentAction)) ? " active" : "")'>
+            <a asp-controller="User" asp-action="Index" class="menu-link">
+              <div>Danh sách Người dùng</div>
+            </a>
+          </li>
+          <li class='menu-item@(currentController.Equals("User", StringComparison.OrdinalIgnoreCase) && currentAction.Equals("Create", StringComparison.OrdinalIgnoreCase) ? " active" : "")'>
+            <a asp-controller="User" asp-action="Create" class="menu-link">
+              <div>Tạo Người dùng</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    }
   </ul>
 </aside>
 <!-- / Menu -->

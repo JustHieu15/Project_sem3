@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using AspnetCoreMvcStarter.Context;
-using AspnetCoreMvcStarter.Models; // Cần cho User và UserRole
-using System.Security.Cryptography; // Cần cho SHA256
-using System.Text; // Cần cho Encoding
+using AspnetCoreMvcStarter.Models;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies; // Thêm cho Cookie Authentication
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
-    options.Filters.Add<AuthAttribute>(); // Đảm bảo AuthAttribute được đăng ký toàn cục
+    options.Filters.Add<AuthAttribute>(); // Giữ nguyên bộ lọc toàn cục
 });
 
 // Cấu hình DbContext
@@ -20,13 +21,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian session hết hạn
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddHttpContextAccessor();
+// Thêm dịch vụ xác thực với Cookie Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login"; // Đường dẫn đến trang đăng nhập (sử dụng AuthController)
+        options.AccessDeniedPath = "/Auth/AccessDenied"; // Đường dẫn khi bị từ chối quyền
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Thời gian hết hạn của cookie
+    });
 
+// Thêm dịch vụ phân quyền
+builder.Services.AddAuthorization();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -37,8 +49,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        // Đảm bảo database đã được tạo (nếu chưa có)
-        // context.Database.EnsureCreated(); // Hoặc chạy migrations
+        // context.Database.Migrate(); // Nếu dùng migrations, thay EnsureCreated bằng Migrate
         SeedAdminUser(context);
     }
     catch (Exception ex)
@@ -47,7 +58,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while seeding the database.");
     }
 }
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -61,9 +71,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // Quan trọng: Phải đứng trước UseAuthorization và UseEndpoints
-
+// Thêm middleware xác thực trước phân quyền và session
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
@@ -71,24 +82,21 @@ app.MapControllerRoute(
 
 app.Run();
 
-
 // Hàm seed admin user
 void SeedAdminUser(ApplicationDbContext context)
 {
-    // Kiểm tra xem đã có admin user nào chưa
     if (!context.Users.Any(u => u.Role == UserRole.Admin))
     {
         var adminUser = new User
         {
             Name = "Admin User",
-            Email = "admin@example.com", // Thay bằng email admin bạn muốn
-            Password = HashPasswordStatic("Admin@123"), // Thay bằng mật khẩu admin bạn muốn
+            Email = "admin@example.com",
+            Password = HashPasswordStatic("Admin@123"),
             Role = UserRole.Admin,
             Address = "Admin Address",
             Phone = "0123456789",
             IsActive = true,
             CreatedDate = DateTime.UtcNow
-            // DepartmentId có thể để null hoặc gán nếu có Department mặc định
         };
         context.Users.Add(adminUser);
         context.SaveChanges();
