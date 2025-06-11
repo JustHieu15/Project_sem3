@@ -1,0 +1,92 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.KpiTask>
+@using AspnetCoreMvcStarter.Models
+
+@{
+ViewData["Title"] = "My KPI Tasks";
+}
+
+<h2 style="text-align:center">Công Việc KPI Của Tôi</h2>
+
+@if (TempData["Success"] != null)
+{
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  @TempData["Success"]
+  <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
+@if (TempData["Error"] != null)
+{
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  @TempData["Error"]
+  <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nội dung</th>
+      <th>Số văn bản</th>
+      <th>Ngày bắt đầu</th>
+      <th>Ngày kết thúc</th>
+      <th>Điểm đề xuất</th>
+      <th>Trạng thái</th>
+      <th>Người duyệt</th>
+      <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+    @foreach (var task in Model)
+    {
+    <tr>
+      <td>@task.Id</td>
+      <td>@task.TaskContent</td>
+      <td>@(task.DocumentNumber != 0 ? task.DocumentNumber.ToString() : "N/A")</td>
+      <td>@task.StartDate.ToString("dd/MM/yyyy")</td>
+      <td>@task.EndDate.ToString("dd/MM/yyyy")</td>
+      <td>@task.ProposedPoints</td>
+      <td>
+        @switch (task.Status)
+        {
+        case AspnetCoreMvcStarter.Models.TaskStatus.Pending:
+        <span class="badge bg-warning text-dark">Chờ xử lý</span>
+        break;
+        case AspnetCoreMvcStarter.Models.TaskStatus.InProgress:
+        <span class="badge bg-primary">Đang thực hiện</span>
+        break;
+        case AspnetCoreMvcStarter.Models.TaskStatus.Completed:
+        <span class="badge bg-info">Hoàn thành</span>
+        break;
+        case AspnetCoreMvcStarter.Models.TaskStatus.Approved:
+        <span class="badge bg-success">Đã duyệt</span>
+        break;
+        case AspnetCoreMvcStarter.Models.TaskStatus.Rejected:
+        <span class="badge bg-danger">Bị từ chối</span>
+        break;
+        case AspnetCoreMvcStarter.Models.TaskStatus.Overdue:
+        <span class="badge bg-secondary">Quá hạn</span>
+        break;
+        }
+      </td>
+      <td>@(task.ApprovedByUser?.Name ?? "N/A")</td>
+      <td>
+        <a asp-action="Details" asp-route-id="@task.Id" class="btn btn-sm btn-info" title="Chi tiết">
+          <i class="fas fa-eye">Chi tiết</i>
+        </a>
+      </td>
+    </tr>
+    }
+    }
+    else
+    {
+    <tr>
+      <td colspan="9" class="text-center">Không có công việc KPI nào</td>
+    </tr>
+    }
+    </tbody>
+  </table>
+</div>

@@ -2,38 +2,48 @@
 @using AspnetCoreMvcStarter.Models
 
 @{
-    ViewData["Title"] = "Chỉnh sửa Người dùng";
-    var currentUserRole = ViewContext.HttpContext.Session.GetString("UserRole");
-    bool isAdmin = currentUserRole == UserRole.Admin.ToString();
+    ViewData["Title"] = "Edit User";
+    var currentUserRole = HttpContext.Session.GetString("UserRole");
 }
 
 <div class="container mt-4">
     <div class="card">
-        <div class="card-header bg-warning text-dark"> @* Thay đổi màu header *@
-            <h4 class="mb-0">Chỉnh sửa Thông tin Người dùng: @Model.Name</h4>
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Chỉnh Sửa Người Dùng: @Model.Name</h4>
         </div>
-        <div class="card-body" style="margin-top: 20px">
-            <form asp-action="Edit" asp-route-id="@Model.Id" method="post"> @* asp-route-id *@
+        <div class="card-body" style="margin-top: 20px;">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <form asp-action="Edit" method="post">
                 @Html.AntiForgeryToken()
-                <input type="hidden" asp-for="Id" /> @* Thêm input ẩn cho Id *@
-                <input type="hidden" asp-for="CreatedDate" /> @* Giữ lại CreatedDate *@
-                @if(!isAdmin) { <input type="hidden" asp-for="Role" /> <input type="hidden" asp-for="IsActive" /> } @* Nếu không phải admin, giữ lại Role và IsActive hiện tại *@
-
-
+                <input type="hidden" asp-for="Id" />
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Name" class="form-label fw-semibold">Họ và Tên</label>
-                            <input asp-for="Name" class="form-control" />
+                            <label asp-for="Name" class="form-label fw-semibold">Họ và Tên <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control" required />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Email" class="form-label fw-semibold">Email</label>
-                            <input asp-for="Email" type="email" class="form-control" />
+                            <label asp-for="Email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                            <input asp-for="Email" type="email" class="form-control" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
@@ -43,16 +53,15 @@
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label for="newPassword" class="form-label fw-semibold">Mật khẩu mới (để trống nếu không đổi)</label>
-                            <input name="newPassword" id="newPassword" type="password" class="form-control" />
-                            @* Không cần validation cho newPassword ở đây, vì nó là tùy chọn *@
+                            <input type="password" name="newPassword" class="form-control" minlength="6" />
                         </div>
                     </div>
-                    @if (isAdmin) // Chỉ hiển thị cho Admin
+                    @if (currentUserRole == UserRole.Admin.ToString())
                     {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label asp-for="Role" class="form-label fw-semibold">Chức vụ</label>
-                                <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select">
+                                <label asp-for="Role" class="form-label fw-semibold">Chức vụ <span class="text-danger">*</span></label>
+                                <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select" required>
                                     <option value="">-- Chọn chức vụ --</option>
                                 </select>
                                 <span asp-validation-for="Role" class="text-danger"></span>
@@ -79,16 +88,6 @@
                         </div>
                     </div>
                 </div>
-                 @if (isAdmin) // Chỉ hiển thị cho Admin
-                {
-                    <div class="form-group mb-3">
-                        <div class="form-check">
-                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
-                            <label asp-for="IsActive" class="form-check-label">Kích hoạt tài khoản</label>
-                        </div>
-                    </div>
-                }
-
 
                 <div class="form-group mb-3">
                     <label asp-for="Address" class="form-label fw-semibold">Địa chỉ</label>
@@ -96,8 +95,19 @@
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
 
+                @if (currentUserRole == UserRole.Admin.ToString())
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="IsActive" class="form-label fw-semibold">Trạng thái tài khoản</label>
+                        <div class="form-check">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsActive" class="form-check-label">Hoạt động</label>
+                        </div>
+                    </div>
+                }
+
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-warning"> @* Thay đổi màu nút *@
+                    <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Lưu thay đổi
                     </button>
                     <a asp-action="Index" class="btn btn-secondary ms-2">
@@ -109,3 +119,6 @@
     </div>
 </div>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

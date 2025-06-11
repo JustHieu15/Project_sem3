@@ -1,14 +1,16 @@
+using AspnetCoreMvcStarter.Context;
 using AspnetCoreMvcStarter.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
-using AspnetCoreMvcStarter.Context;
-using Microsoft.AspNetCore.Mvc.Rendering; // Cần cho SelectList
-using Microsoft.EntityFrameworkCore; // Cần cho ToListAsync hoặc Include nếu cần
 
 namespace AspnetCoreMvcStarter.Controllers
 {
-    public class UserController : Controller // Nên áp dụng [Auth] ở đây nếu chưa làm toàn cục
+    [Authorize]
+    public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
 
@@ -20,33 +22,28 @@ namespace AspnetCoreMvcStarter.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
-            // Lấy vai trò của người dùng từ Session
             var userRoleString = HttpContext.Session.GetString("UserRole");
             bool isAdmin = userRoleString == UserRole.Admin.ToString();
 
             IQueryable<User> usersQuery = _context.Users.Include(u => u.Department);
 
-            if (!isAdmin) // Nếu không phải admin, chỉ hiển thị thông tin của chính họ
+            if (!isAdmin)
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
-                if (userId.HasValue)
+                if (!userId.HasValue)
                 {
-                    usersQuery = usersQuery.Where(u => u.Id == userId.Value);
+                    TempData["Error"] = "Phiên đăng nhập không hợp lệ.";
+                    return RedirectToAction("Login", "Auth");
                 }
-                else
-                {
-                    return View(new List<User>()); // Hoặc xử lý lỗi nếu UserId không có
-                }
+                usersQuery = usersQuery.Where(u => u.Id == userId.Value);
             }
-            // Admin có thể xem tất cả người dùng
+
             return View(await usersQuery.ToListAsync());
         }
-
 
         // GET: User/Create
         public IActionResult Create()
         {
-            // Kiểm tra quyền Admin
             var userRoleString = HttpContext.Session.GetString("UserRole");
             if (userRoleString != UserRole.Admin.ToString())
             {
@@ -54,15 +51,15 @@ namespace AspnetCoreMvcStarter.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name).ToList(), "Id", "Name");
+            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name), "Id", "Name");
             return View();
         }
 
+        // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Email,Password,Role,DepartmentId,Address,Phone")] User user)
         {
-            // Kiểm tra quyền Admin
             var userRoleString = HttpContext.Session.GetString("UserRole");
             if (userRoleString != UserRole.Admin.ToString())
             {
@@ -70,21 +67,33 @@ namespace AspnetCoreMvcStarter.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Kiểm tra email trùng
+            if (await _context.Users.AnyAsync(u => u.Email == user.Email))
+            {
+                ModelState.AddModelError("Email", "Email này đã được sử dụng.");
+            }
+
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(user.Password))
+                try
                 {
                     user.Password = HashPassword(user.Password);
-                }
-                user.CreatedDate = DateTime.UtcNow;
-                user.IsActive = true;
+                    user.CreatedDate = DateTime.UtcNow;
+                    user.IsActive = true;
 
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                TempData["Success"] = "Tạo người dùng thành công!";
-                return RedirectToAction(nameof(Index));
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Tạo người dùng thành công!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["Error"] = "Lỗi khi tạo người dùng. Vui lòng kiểm tra dữ liệu.";
+                    // Log lỗi nếu cần: ex.InnerException?.Message
+                }
             }
-            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name).ToList(), "Id", "Name", user.DepartmentId);
+
+            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name), "Id", "Name", user.DepartmentId);
             return View(user);
         }
 
@@ -102,7 +111,6 @@ namespace AspnetCoreMvcStarter.Controllers
                 return NotFound();
             }
 
-            // Kiểm tra quyền: Admin có thể sửa tất cả, người dùng thường chỉ sửa thông tin của chính họ
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var currentUserRoleString = HttpContext.Session.GetString("UserRole");
 
@@ -112,12 +120,12 @@ namespace AspnetCoreMvcStarter.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name).ToList(), "Id", "Name", user.DepartmentId);
-            // Không truyền mật khẩu ra view, để trống để người dùng có thể thay đổi nếu muốn
+            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name), "Id", "Name", user.DepartmentId);
             user.Password = "";
             return View(user);
         }
 
+        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Role,DepartmentId,Address,Phone,IsActive")] User user, string? newPassword)
@@ -127,7 +135,6 @@ namespace AspnetCoreMvcStarter.Controllers
                 return NotFound();
             }
 
-            // Kiểm tra quyền
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var currentUserRoleString = HttpContext.Session.GetString("UserRole");
             bool isAdmin = currentUserRoleString == UserRole.Admin.ToString();
@@ -138,7 +145,6 @@ namespace AspnetCoreMvcStarter.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Lấy user hiện tại từ DB để chỉ cập nhật các trường cần thiết và không mất các trường không bind
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null)
             {
@@ -146,62 +152,54 @@ namespace AspnetCoreMvcStarter.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Kiểm tra email trùng (nếu email thay đổi)
+            if (user.Email != existingUser.Email && await _context.Users.AnyAsync(u => u.Email == user.Email && u.Id != user.Id))
+            {
+                ModelState.AddModelError("Email", "Email này đã được sử dụng.");
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     existingUser.Name = user.Name;
-                    existingUser.Email = user.Email; // Cần cẩn thận nếu Email là duy nhất và không cho phép trùng
+                    existingUser.Email = user.Email;
 
-                    // Chỉ Admin mới được thay đổi Role và IsActive
                     if (isAdmin)
                     {
                         existingUser.Role = user.Role;
                         existingUser.IsActive = user.IsActive;
                     }
-                    // Nếu không phải admin, Role và IsActive sẽ không được cập nhật từ form
-                    // Mà sẽ giữ nguyên giá trị hiện tại của existingUser
 
                     existingUser.DepartmentId = user.DepartmentId;
                     existingUser.Address = user.Address;
                     existingUser.Phone = user.Phone;
 
-                    if (!string.IsNullOrEmpty(newPassword)) // Nếu có nhập mật khẩu mới
+                    if (!string.IsNullOrEmpty(newPassword))
                     {
                         existingUser.Password = HashPassword(newPassword);
                     }
-                    // CreatedDate không thay đổi
 
                     _context.Update(existingUser);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "Cập nhật người dùng thành công!";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException ex)
                 {
-                    if (!_context.Users.Any(e => e.Id == user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    TempData["Error"] = "Lỗi khi cập nhật người dùng. Vui lòng kiểm tra dữ liệu.";
+                    // Log lỗi nếu cần: ex.InnerException?.Message
                 }
-                return RedirectToAction(nameof(Index));
             }
 
-            // Nếu ModelState không hợp lệ, cần load lại danh sách phòng ban
-            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name).ToList(), "Id", "Name", user.DepartmentId);
-            // Để tránh lỗi validation password nếu người dùng không muốn đổi, trả về user từ DB
-            user.Password = ""; // Hoặc existingUser.Password nếu bạn muốn giữ lại (nhưng không nên hiển thị)
-            return View(user); // Hoặc return View(existingUser) nếu bạn muốn giữ lại các giá trị cũ khi có lỗi
+            ViewBag.Departments = new SelectList(_context.Departments.OrderBy(d => d.Name), "Id", "Name", user.DepartmentId);
+            user.Password = "";
+            return View(user);
         }
-
 
         // GET: User/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            // Kiểm tra quyền Admin
             var userRoleString = HttpContext.Session.GetString("UserRole");
             if (userRoleString != UserRole.Admin.ToString())
             {
@@ -225,11 +223,11 @@ namespace AspnetCoreMvcStarter.Controllers
             return View(user);
         }
 
+        // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            // Kiểm tra quyền Admin
             var userRoleString = HttpContext.Session.GetString("UserRole");
             if (userRoleString != UserRole.Admin.ToString())
             {
@@ -238,23 +236,29 @@ namespace AspnetCoreMvcStarter.Controllers
             }
 
             var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            if (user == null)
             {
-                // Kiểm tra không cho admin tự xóa chính mình (nếu cần)
-                var currentUserId = HttpContext.Session.GetInt32("UserId");
-                if(user.Id == currentUserId && user.Role == UserRole.Admin)
-                {
-                    TempData["Error"] = "Không thể xóa tài khoản admin hiện tại.";
-                    return RedirectToAction(nameof(Index));
-                }
+                TempData["Error"] = "Không tìm thấy người dùng để xóa.";
+                return RedirectToAction(nameof(Index));
+            }
 
+            var currentUserId = HttpContext.Session.GetInt32("UserId");
+            if (user.Id == currentUserId && user.Role == UserRole.Admin)
+            {
+                TempData["Error"] = "Không thể xóa tài khoản admin hiện tại.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Xóa người dùng thành công!";
             }
-            else
+            catch (DbUpdateException ex)
             {
-                TempData["Error"] = "Không tìm thấy người dùng để xóa.";
+                TempData["Error"] = "Lỗi khi xóa người dùng, có thể do người dùng đang liên quan đến dữ liệu khác.";
+                // Log lỗi nếu cần: ex.InnerException?.Message
             }
 
             return RedirectToAction(nameof(Index));

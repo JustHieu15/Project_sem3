@@ -1,9 +1,9 @@
 using AspnetCoreMvcStarter.Context;
 using AspnetCoreMvcStarter.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace AspnetCoreMvcStarter.Controllers
 {
@@ -11,12 +11,32 @@ namespace AspnetCoreMvcStarter.Controllers
     public class KpiReportsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public KpiReportsController(ApplicationDbContext context, UserManager<User> userManager)
+        public KpiReportsController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
+        }
+
+        // Helper method to get current user
+        private async Task<User> GetCurrentUserAsync()
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            }
+            return null;
+        }
+
+        // Alternative helper method using session
+        private async Task<User> GetCurrentUserFromSessionAsync()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId.HasValue)
+            {
+                return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId.Value);
+            }
+            return null;
         }
 
         // GET: KpiReports
@@ -25,15 +45,22 @@ namespace AspnetCoreMvcStarter.Controllers
             ViewData["CurrentMonth"] = month ?? DateTime.Now.Month;
             ViewData["CurrentYear"] = year ?? DateTime.Now.Year;
 
-            var currentUser = await _userManager.GetUserAsync(User);
+            var currentUser = await GetCurrentUserAsync() ?? await GetCurrentUserFromSessionAsync();
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
 
             IQueryable<MonthlyKpiReport> reportsQuery = _context.MonthlyKpiReports.Include(r => r.User);
 
-            if (User.IsInRole(nameof(UserRole.Admin)))
+            // Check user role from claims or session
+            var userRole = User.FindFirstValue(ClaimTypes.Role) ?? HttpContext.Session.GetString("UserRole");
+
+            if (userRole == UserRole.Admin.ToString())
             {
                 // Admin sees all reports
             }
-            else if (User.IsInRole(nameof(UserRole.Leader)))
+            else if (userRole == UserRole.Leader.ToString())
             {
                 reportsQuery = reportsQuery.Where(r => r.UserId == currentUser.Id || r.User.DepartmentId == currentUser.DepartmentId);
             }
@@ -50,14 +77,21 @@ namespace AspnetCoreMvcStarter.Controllers
 
         public async Task<IActionResult> MyReport(int? month, int? year)
         {
-          var currentUser = await _userManager.GetUserAsync(User);
-          ViewData["CurrentMonth"] = month ?? DateTime.Now.Month;
-          ViewData["CurrentYear"] = year ?? DateTime.Now.Year;
-          var reports = await _context.MonthlyKpiReports
-            .Include(r => r.User)
-            .Where(r => r.UserId == currentUser.Id && r.Month == (month ?? DateTime.Now.Month) && r.Year == (year ?? DateTime.Now.Year))
-            .ToListAsync();
-          return View(reports);
+            var currentUser = await GetCurrentUserAsync() ?? await GetCurrentUserFromSessionAsync();
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            ViewData["CurrentMonth"] = month ?? DateTime.Now.Month;
+            ViewData["CurrentYear"] = year ?? DateTime.Now.Year;
+
+            var reports = await _context.MonthlyKpiReports
+                .Include(r => r.User)
+                .Where(r => r.UserId == currentUser.Id && r.Month == (month ?? DateTime.Now.Month) && r.Year == (year ?? DateTime.Now.Year))
+                .ToListAsync();
+
+            return View(reports);
         }
 
         // GET: KpiReports/Generate
