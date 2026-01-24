@@ -1,0 +1,72 @@
+@model AspnetCoreMvcStarter.Models.TaskDefinition
+
+@{
+    ViewData["Title"] = "Tạo Danh mục Công việc";
+}
+
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Quản lý Danh mục /</span> @ViewData["Title"]
+</h4>
+
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Thông tin công việc mẫu</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["Error"]</div>
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="JobTypeId" class="form-label">Nhóm công việc</label>
+                        <select asp-for="JobTypeId" class="form-select" asp-items="ViewBag.JobTypeId">
+                            <option value="">-- Chọn một nhóm công việc --</option>
+                        </select>
+                        <span asp-validation-for="JobTypeId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Tên Công Việc</label>
+                        <input asp-for="Name" class="form-control" placeholder="Ví dụ: Lắp đặt mạng ngoại vi" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Mô tả</label>
+                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Mô tả ngắn gọn về công việc này"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DefaultPoints" class="form-label">Điểm đề xuất mặc định</label>
+                        <input asp-for="DefaultPoints" type="number" class="form-control" />
+                        <span asp-validation-for="DefaultPoints" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                            <label class="form-check-label" asp-for="IsActive">
+                                Kích hoạt (Cho phép chuyên viên chọn)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="btn btn-primary">Lưu Lại</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

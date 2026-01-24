@@ -1,53 +1,99 @@
 @model AspnetCoreMvcStarter.Models.User
+@using AspnetCoreMvcStarter.Models
 
 @{
     ViewData["Title"] = "Create User";
 }
 
-<h2 style="text-align:center">Tạo Người Dùng Mới</h2>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Tạo Người Dùng Mới</h4>
+        </div>
+        <div class="card-body" style="margin-top: 20px;">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @Html.Raw(TempData["Error"])
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="Name">Họ và Tên</label>
-        <input asp-for="Name" class="form-control" required />
-        <span asp-validation-for="Name" class="text-danger"></span>
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Email" type="email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Role" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <!-- SỬA LẠI ĐỂ TỰ ĐỘNG TẠO DROPDOWN TỪ ENUM -->
+                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select">
+                                <option value="">-- Chọn chức vụ --</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="DepartmentId" class="form-label fw-semibold"></label>
+                            <!-- SỬA LẠI: BỎ OPTION THỦ CÔNG BÊN TRONG -->
+                            <!-- Controller đã thêm option mặc định vào ViewBag rồi -->
+                            <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-select"></select>
+                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Phone" class="form-label fw-semibold"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Address" class="form-label fw-semibold"></label>
+                    <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Tạo người dùng
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email" type="email" class="form-control" required />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Password">Mật khẩu</label>
-        <input asp-for="Password" type="password" class="form-control" required />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Role">Chức vụ</label>
-        <select asp-for="Role" class="form-control" required>
-            <option value="">-- Chọn chức vụ --</option>
-            <option value="Trưởng Bộ Phận">Trưởng Bộ Phận</option>
-            <option value="Nhân viên">Nhân viên</option>
-        </select>
-        <span asp-validation-for="Role" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Address">Địa chỉ</label>
-        <textarea asp-for="Address" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Phone">Số điện thoại</label>
-        <input asp-for="Phone" class="form-control" />
-        <span asp-validation-for="Phone" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-success mt-3">Tạo người dùng</button>
-    <a asp-action="Index" class="btn btn-secondary mt-3">Quay lại danh sách</a>
-</form>
-
+</div>

@@ -1,0 +1,19 @@
+@model AspnetCoreMvcStarter.Models.JobType
+@{ ViewData["Title"] = "Xóa Loại công việc"; }
+
+<h3>Bạn có chắc chắn muốn xóa?</h3>
+<p class="text-danger">Hành động này không thể hoàn tác và sẽ xóa tất cả các danh mục công việc con.</p>
+<div>
+  <h4>Loại công việc: @Model.Name</h4>
+  <hr />
+  <dl class="row">
+    <dt class="col-sm-2">Mã</dt>
+    <dd class="col-sm-10">@Model.Code</dd>
+  </dl>
+
+  <form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" /> |
+    <a asp-action="Index">Hủy</a>
+  </form>
+</div>

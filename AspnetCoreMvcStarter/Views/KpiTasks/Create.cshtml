@@ -1,0 +1,121 @@
+@model AspnetCoreMvcStarter.Models.KpiTask
+@using AspnetCoreMvcStarter.Models // Sửa lỗi 4: Thêm using cho Department
+@using TaskStatus = AspnetCoreMvcStarter.Models.TaskStatus
+@{
+ViewData["Title"] = "Tạo công việc";
+var allDepartments = ViewBag.AllDepartments as List<Department>;
+}
+
+<form asp-action="Create" method="post">
+  <h4>Chi tiết công việc: Lập đặt</h4>
+  <div asp-validation-summary="All" class="text-danger mb-3"></div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nhóm công việc</label>
+            <select id="JobTypeSelect" class="form-select" asp-items="@(ViewBag.JobTypeId as SelectList)">
+              <option value="">-- Chọn nhóm công việc --</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label asp-for="TaskDefinitionId" class="form-label fw-bold"></label>
+            <select asp-for="TaskDefinitionId" id="TaskDefinitionSelect" class="form-select">
+              <option value="">-- Vui lòng chọn nhóm công việc trước --</option>
+            </select>
+            <span asp-validation-for="TaskDefinitionId" class="text-danger"></span>
+          </div>
+          <div class="mb-3">
+            <label asp-for="DetailedDescription" class="form-label"></label>
+            <textarea asp-for="DetailedDescription" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label asp-for="ApproverId" class="form-label"></label>
+              <select asp-for="ApproverId" class="form-select" asp-items="@(ViewBag.ApproverId as SelectList)">
+                <option value="">-- Chọn lãnh đạo --</option>
+              </select>
+            </div>
+            <div class="col">
+              <label asp-for="UserProposedPoints" class="form-label"></label>
+              <input type="number" asp-for="UserProposedPoints" class="form-control" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label asp-for="DeadlineInDocument" class="form-label"></label>
+              <input type="date" asp-for="DeadlineInDocument" class="form-control" />
+            </div>
+            <div class="col">
+              <label asp-for="Status" class="form-label"></label>
+              <select asp-for="Status" asp-items="Html.GetEnumSelectList<TaskStatus>()" class="form-select"></select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label asp-for="ReasonForIncompletion" class="form-label"></label>
+            <textarea asp-for="ReasonForIncompletion" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label asp-for="MainDepartmentId" class="form-label"></label>
+              <select asp-for="MainDepartmentId" class="form-select" asp-items="@(ViewBag.MainDepartmentId as SelectList)">
+                <option value="">-- Chọn ĐV Chủ trì --</option>
+              </select>
+            </div>
+            <div class="col">
+              <label name="RelatedDepartmentIds" class="form-label">(Giữ Ctrl để chọn nhiều)</label>
+              <select name="RelatedDepartmentIds" class="form-select" multiple size="4">
+                @if(allDepartments != null)
+                {
+                foreach (var dept in allDepartments)
+                {
+                <option value="@dept.Id">@dept.Name</option>
+                }
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title">Thông tin chung</h5>
+              <p><strong>Người thực hiện:</strong> @Context.Session.GetString("UserName")</p>
+              <p><strong>Ngày tạo:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+        <a asp-action="MyTask" class="btn btn-secondary">Quay Lại Danh Sách Của Tôi</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#JobTypeSelect').on('change', function () {
+      var jobTypeId = $(this).val();
+      var taskDefSelect = $('#TaskDefinitionSelect');
+      taskDefSelect.empty().append($('<option/>', { value: '', text: 'Đang tải...' }));
+
+      if (jobTypeId) {
+        $.getJSON('/KpiTasks/GetTaskDefinitionsByJobType?jobTypeId=' + jobTypeId, function (data) {
+          taskDefSelect.empty().append($('<option/>', { value: '', text: '-- Chọn công việc --' }));
+          $.each(data, function (index, item) {
+            taskDefSelect.append($('<option/>', { value: item.id, text: item.name }));
+          });
+        });
+      } else {
+        taskDefSelect.empty().append($('<option/>', { value: '', text: '-- Vui lòng chọn nhóm công việc trước --' }));
+      }
+    });
+  });
+</script>
+}

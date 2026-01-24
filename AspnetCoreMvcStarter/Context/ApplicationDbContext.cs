@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AspnetCoreMvcStarter.Models;
-using AspnetCoreMvcStarter.Models;
 
-namespace AspnetCoreMvcStarter.Areas.Admin.Context
+namespace AspnetCoreMvcStarter.Context
 {
     public class ApplicationDbContext : DbContext
     {
@@ -10,34 +9,68 @@ namespace AspnetCoreMvcStarter.Areas.Admin.Context
         {
         }
 
-        // Existing DbSets
+        // DbSets không thay đổi
         public DbSet<User> Users { get; set; }
-
-        // New DbSets for KPI System
         public DbSet<KpiTask> KpiTasks { get; set; }
         public DbSet<TaskUpdate> TaskUpdates { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<MonthlyKpiReport> MonthlyKpiReports { get; set; }
+        public DbSet<JobType> JobTypes { get; set; }
+		public DbSet<TaskDefinition> TaskDefinitions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure relationships for KpiTask
-            modelBuilder.Entity<KpiTask>()
-                .HasOne(k => k.AssignedUser)
-                .WithMany(u => u.AssignedTasks)
-                .HasForeignKey(k => k.AssignedUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+			modelBuilder.Entity<TaskDefinition>(entity =>
+            {
+                entity.HasOne(d => d.JobType)
+                      .WithMany(p => p.TaskDefinitions)
+                      .HasForeignKey(d => d.JobTypeId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
 
-            modelBuilder.Entity<KpiTask>()
-                .HasOne(k => k.ApprovedByUser)
-                .WithMany(u => u.ApprovedTasks)
-                .HasForeignKey(k => k.ApprovedByUserId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .IsRequired(false);
+            // Cấu hình JobType - không thay đổi
+            modelBuilder.Entity<JobType>()
+                .HasIndex(j => j.Code)
+                .IsUnique()
+                .HasFilter("[Code] IS NOT NULL");
+            // ... (các cấu hình khác của JobType giữ nguyên)
 
-            // Configure relationships for TaskUpdate
+            modelBuilder.Entity<TaskDefinition>(entity =>
+            {
+              entity.HasOne(d => d.JobType)
+                .WithMany(p => p.TaskDefinitions)
+                .HasForeignKey(d => d.JobTypeId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa Def thì xóa cả Task liên quan
+            });
+
+             modelBuilder.Entity<KpiTask>(entity =>
+            {
+                entity.HasOne(d => d.TaskDefinition)
+                      .WithMany(p => p.KpiTasks)
+                      .HasForeignKey(d => d.TaskDefinitionId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(k => k.AssignedUser)
+                      .WithMany(u => u.AssignedTasks)
+                      .HasForeignKey(k => k.AssignedUserId)
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .IsRequired(false);
+
+                entity.HasOne(k => k.Approver)
+                      .WithMany(u => u.ApprovedTasks)
+                      .HasForeignKey(k => k.ApproverId)
+                      .OnDelete(DeleteBehavior.SetNull)
+                      .IsRequired(false);
+
+                entity.HasOne(k => k.MainDepartment)
+                      .WithMany()
+                      .HasForeignKey(k => k.MainDepartmentId)
+                      .OnDelete(DeleteBehavior.SetNull)
+                      .IsRequired(false);
+            });
+            // Cấu hình TaskUpdate - không thay đổi
             modelBuilder.Entity<TaskUpdate>()
                 .HasOne(tu => tu.Task)
                 .WithMany(k => k.TaskUpdates)
@@ -50,29 +83,45 @@ namespace AspnetCoreMvcStarter.Areas.Admin.Context
                 .HasForeignKey(tu => tu.UpdatedByUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure relationships for User and Department
+
+            // Cấu hình User và Department - không thay đổi
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // Configure relationships for MonthlyKpiReport
+
+            // Cấu hình MonthlyKpiReport - không thay đổi
             modelBuilder.Entity<MonthlyKpiReport>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.MonthlyReports)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Create unique index for monthly reports (one report per user per month/year)
             modelBuilder.Entity<MonthlyKpiReport>()
                 .HasIndex(r => new { r.UserId, r.Month, r.Year })
                 .IsUnique();
 
-            // Configure decimal precision
             modelBuilder.Entity<MonthlyKpiReport>()
                 .Property(r => r.CompletionRate)
                 .HasColumnType("decimal(5,2)");
+
+
+
+            // Các index cho KpiTask
+            modelBuilder.Entity<KpiTask>()
+                .HasIndex(k => k.Status); // Vẫn còn
+
+            modelBuilder.Entity<KpiTask>()
+                .HasIndex(k => new { k.AssignedUserId, k.Status });
+
+            // Các index cho JobType - không thay đổi
+            modelBuilder.Entity<JobType>()
+                .HasIndex(j => j.IsActive);
+
+            modelBuilder.Entity<JobType>()
+                .HasIndex(j => j.DisplayOrder);
         }
     }
 }

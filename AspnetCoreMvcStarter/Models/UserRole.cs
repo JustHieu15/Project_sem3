@@ -1,14 +1,21 @@
-namespace DefaultNamespace
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AspnetCoreMvcStarter.Models
 {
   public enum UserRole
   {
-    [Display(Name = "Chuyên viên")]
-    Employee = 0,
+    [Display(Name="Chọn chức vụ")]
+    None = 0,
 
-    [Display(Name = "Lãnh đạo")]
-    Leader = 1,
+    [Display(Name="Chuyên viên")]
+    Employee = 1,
 
-    [Display(Name = "Quản trị viên")]
-    Admin = 2
+    [Display(Name="Lãnh đạo")]
+    Leader = 2,
+
+    [Display(Name="Quản trị viên")]
+    Admin = 3
   }
 }

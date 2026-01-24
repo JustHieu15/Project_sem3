@@ -1,0 +1,61 @@
+@model IEnumerable<AspnetCoreMvcStarter.ViewModels.EmployeeReportSummary>
+@{
+    ViewData["Title"] = "Báo cáo NSCL Cá nhân";
+    int selectedMonth = (int)(ViewData["SelectedMonth"] ?? DateTime.Now.Month);
+    int selectedYear = (int)(ViewData["SelectedYear"] ?? DateTime.Now.Year);
+}
+
+<h4>@ViewData["Title"]</h4>
+<form method="get" class="row g-3 mb-3 align-items-end">
+    <div class="col-auto">
+        <label>Tháng</label>
+        <select name="month" class="form-select">
+            @for(int i = 1; i <= 12; i++)
+            {
+                <option value="@i" selected="@(i == selectedMonth)">Tháng @i</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <label>Năm</label>
+        <input type="number" name="year" value="@selectedYear" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Xem</button>
+    </div>
+    <div class="col-auto">
+         <a asp-action="ExportTeamReportToExcel" asp-route-month="@selectedMonth" asp-route-year="@selectedYear" class="btn btn-success">
+            <i class="ri-file-excel-2-line"></i> Xuất Excel
+        </a>
+    </div>
+</form>
+
+<div class="table-responsive text-nowrap">
+    <table class="table table-bordered text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Họ Tên</th>
+                <th>Tổng CV</th>
+                <th>Đã duyệt</th>
+                <th>Đang làm</th>
+                <th>Tổng Điểm</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                    <td>@item.TotalTasks</td>
+                    <td>@item.ApprovedTasks</td>
+                    <td>@item.InProgressTasks</td>
+                    <td>@item.TotalPoints</td>
+                    <td>
+                        <a asp-controller="KpiTasks" asp-action="ReviewList" asp-route-employeeId="@item.UserId" asp-route-month="@selectedMonth" asp-route-year="@selectedYear" class="btn btn-sm btn-primary">Xem chi tiết CV</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

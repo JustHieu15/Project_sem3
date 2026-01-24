@@ -1,0 +1,75 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.KpiTask>
+@using AspnetCoreMvcStarter.Extend
+@{
+    ViewData["Title"] = "Duyệt Công Việc Nhân Viên";
+    int selectedMonth = (int)(ViewData["SelectedMonth"] ?? DateTime.Now.Month);
+    int selectedYear = (int)(ViewData["SelectedYear"] ?? DateTime.Now.Year);
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+             <div class="col-md-3">
+                <label class="form-label">Chọn nhân viên:</label>
+                <select name="employeeId" class="form-select" asp-items="@(ViewBag.EmployeeId as SelectList)">
+                    <option value="">-- Tất cả --</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Chọn tháng:</label>
+                <select name="month" class="form-select">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i" selected="@(i == selectedMonth)">Tháng @i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                 <label class="form-label">Chọn năm:</label>
+                <input type="number" name="year" value="@selectedYear" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Lọc</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Nhân viên</th>
+            <th>Tên Công việc</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Điểm duyệt</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.AssignedUser?.Name ?? "N/A")</td>
+                <td>@(item.TaskDefinition?.Name ?? "Lỗi")</td>
+                <td>
+                    <span class="badge bg-@item.Status.ToString().ToLower()">@item.Status.GetDisplayName()</span>
+                </td>
+                <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                <td>@(item.LeaderApprovedPoints?.ToString() ?? "Chưa chấm")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Xem / Chấm điểm</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="6" class="text-center">Không có công việc nào phù hợp với bộ lọc.</td></tr>
+    }
+    </tbody>
+</table>

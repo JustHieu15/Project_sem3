@@ -1,0 +1,33 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.JobType>
+@{ ViewData["Title"] = "Danh sách Loại công việc"; }
+
+<h4>@ViewData["Title"]</h4>
+
+<p>
+  <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+</p>
+<table class="table">
+  <thead>
+  <tr>
+    <th>@Html.DisplayNameFor(model => model.Name)</th>
+    <th>@Html.DisplayNameFor(model => model.Code)</th>
+    <th>@Html.DisplayNameFor(model => model.DefaultKpiPoints)</th>
+    <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  @foreach (var item in Model) {
+    <tr>
+      <td>@Html.DisplayFor(modelItem => item.Name)</td>
+      <td>@Html.DisplayFor(modelItem => item.Code)</td>
+      <td>@Html.DisplayFor(modelItem => item.DefaultKpiPoints)</td>
+      <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+      <td>
+        <a asp-action="Edit" asp-route-id="@item.Id">Sửa</a> |
+        <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

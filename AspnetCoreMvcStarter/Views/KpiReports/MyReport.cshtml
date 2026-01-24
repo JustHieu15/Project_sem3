@@ -1,0 +1,104 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.KpiTask>
+@using AspnetCoreMvcStarter.Extend
+@{
+    ViewData["Title"] = "Báo cáo Cá nhân";
+    int selectedMonth = (int)(ViewData["SelectedMonth"] ?? DateTime.Now.Month);
+    int selectedYear = (int)(ViewData["SelectedYear"] ?? DateTime.Now.Year);
+
+    int totalTasks = Model.Count();
+    int approvedTasks = Model.Count(t => t.Status == AspnetCoreMvcStarter.Models.TaskStatus.Approved);
+    int totalPoints = Model.Where(t => t.Status == AspnetCoreMvcStarter.Models.TaskStatus.Approved).Sum(t => t.LeaderApprovedPoints ?? 0);
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-auto">
+                <label class="form-label">Chọn tháng:</label>
+                <select name="month" class="form-select">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i" selected="@(i == selectedMonth)">Tháng @i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                 <label class="form-label">Chọn năm:</label>
+                <input type="number" name="year" value="@selectedYear" class="form-control" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Xem báo cáo</button>
+            </div>
+            <div class="col-auto">
+                <a asp-action="ExportMyReportToExcel" asp-route-month="@selectedMonth" asp-route-year="@selectedYear" class="btn btn-success">
+                    <i class="ri-file-excel-2-line"></i> Xuất Excel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title text-white">Tổng Công Việc</h5>
+                <p class="card-text fs-4">@totalTasks</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title text-white">CV Đã Duyệt</h5>
+                <p class="card-text fs-4">@approvedTasks</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title text-white">Tổng Điểm Duyệt</h5>
+                <p class="card-text fs-4">@totalPoints</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5>Chi tiết công việc trong tháng</h5>
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên Công việc</th>
+            <th>Trạng thái</th>
+            <th>Điểm tự chấm</th>
+            <th>Điểm được duyệt</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.TaskDefinition?.Name ?? "Lỗi")</td>
+                <td>
+                    <span class="badge bg-@item.Status.ToString().ToLower()">@item.Status.GetDisplayName()</span>
+                </td>
+                <td>@(item.UserProposedPoints?.ToString() ?? "N/A")</td>
+                <td>@(item.LeaderApprovedPoints?.ToString() ?? "Chưa duyệt")</td>
+                <td>
+                    <a asp-controller="KpiTasks" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="5" class="text-center">Không có công việc nào trong kỳ báo cáo này.</td></tr>
+    }
+    </tbody>
+</table>
