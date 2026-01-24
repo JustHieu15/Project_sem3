@@ -1,34 +1,24 @@
 @model AspnetCoreMvcStarter.Models.KpiTask
-@using AspnetCoreMvcStarter.Models
-
 @{
-  ViewData["Title"] = "Delete KPI Task";
+  ViewData["Title"] = "Xóa Công Việc KPI";
 }
 
 <div class="container mt-4">
   <div class="card">
     <div class="card-header bg-danger text-white">
-      <h4 class="mb-0">Xóa Công Việc KPI: @Model.TaskContent</h4>
+      <h4 class="mb-0">Xóa Công Việc KPI: @Model.TaskDefinition.Name</h4>
     </div>
     <div class="card-body">
       <h5>Bạn có chắc chắn muốn xóa công việc này?</h5>
       <p class="text-danger">Hành động này không thể hoàn tác.</p>
 
       <dl class="row">
-        <dt class="col-sm-3">Nội dung</dt>
-        <dd class="col-sm-9">@Model.TaskContent</dd>
-
-        <dt class="col-sm-3">Số văn bản</dt>
-        <dd class="col-sm-9">@(Model.DocumentNumber != 0 ? Model.DocumentNumber.ToString() : "N/A")</dd>
-
-        <dt class="col-sm-3">Ngày bắt đầu</dt>
-        <dd class="col-sm-9">@Model.StartDate.ToString("dd/MM/yyyy")</dd>
-
-        <dt class="col-sm-3">Ngày kết thúc</dt>
-        <dd class="col-sm-9">@Model.EndDate.ToString("dd/MM/yyyy")</dd>
-
-        <dt class="col-sm-3">Điểm đề xuất</dt>
-        <dd class="col-sm-9">@Model.ProposedPoints</dd>
+        <dt class="col-sm-3">Tên công việc</dt>
+        <dd class="col-sm-9">@Model.TaskDefinition.Name</dd>
+        <dt class="col-sm-3">Nhóm công việc</dt>
+        <dd class="col-sm-9">@(Model.TaskDefinition.JobType?.Name ?? "N/A")</dd>
+        <dt class="col-sm-3">Trạng thái hiện tại</dt>
+        <dd class="col-sm-9">@Model.Status.ToString()</dd>
       </dl>
 
       <form asp-action="Delete" method="post">
@@ -37,7 +27,7 @@
         <button type="submit" class="btn btn-danger">
           <i class="fas fa-trash"></i> Xóa
         </button>
-        <a asp-action="Index" class="btn btn-secondary ms-2">
+        <a asp-action="MyTask" class="btn btn-secondary ms-2">
           <i class="fas fa-arrow-left"></i> Hủy
         </a>
       </form>

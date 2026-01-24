@@ -1,12 +1,11 @@
 using AspnetCoreMvcStarter.Context;
 using AspnetCoreMvcStarter.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspnetCoreMvcStarter.Controllers
 {
-    [Authorize(Roles = nameof(UserRole.Admin))] // Chỉ Admin được truy cập
+    [Auth] // Sử dụng custom Auth attribute thay vì Authorize
     public class DepartmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,12 +18,27 @@ namespace AspnetCoreMvcStarter.Controllers
         // GET: Departments
         public async Task<IActionResult> Index()
         {
+            // Kiểm tra quyền Admin bằng Session
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(await _context.Departments.ToListAsync());
         }
 
         // GET: Departments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null) return NotFound();
 
             var department = await _context.Departments
@@ -39,6 +53,13 @@ namespace AspnetCoreMvcStarter.Controllers
         // GET: Departments/Create
         public IActionResult Create()
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -47,11 +68,27 @@ namespace AspnetCoreMvcStarter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Code,Description")] Department department)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(department);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    department.CreatedDate = DateTime.Now;
+                    _context.Add(department);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Tạo phòng ban thành công!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "Lỗi khi tạo phòng ban: " + ex.Message;
+                }
             }
             return View(department);
         }
@@ -59,6 +96,13 @@ namespace AspnetCoreMvcStarter.Controllers
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null) return NotFound();
 
             var department = await _context.Departments.FindAsync(id);
@@ -72,6 +116,13 @@ namespace AspnetCoreMvcStarter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Code,Description,CreatedDate")] Department department)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id != department.Id) return NotFound();
 
             if (ModelState.IsValid)
@@ -80,6 +131,7 @@ namespace AspnetCoreMvcStarter.Controllers
                 {
                     _context.Update(department);
                     await _context.SaveChangesAsync();
+                    TempData["Success"] = "Cập nhật phòng ban thành công!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -94,6 +146,13 @@ namespace AspnetCoreMvcStarter.Controllers
         // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null) return NotFound();
 
             var department = await _context.Departments.FirstOrDefaultAsync(m => m.Id == id);
@@ -107,13 +166,28 @@ namespace AspnetCoreMvcStarter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var userRoleString = HttpContext.Session.GetString("UserRole");
+            if (userRoleString != UserRole.Admin.ToString())
+            {
+                TempData["Error"] = "Bạn không có quyền truy cập chức năng này.";
+                return RedirectToAction("Index", "Home");
+            }
+
             var department = await _context.Departments.FindAsync(id);
             if (department != null)
             {
-                _context.Departments.Remove(department);
+                try
+                {
+                    _context.Departments.Remove(department);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Xóa phòng ban thành công!";
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "Không thể xóa phòng ban: " + ex.Message;
+                }
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

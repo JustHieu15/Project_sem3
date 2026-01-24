@@ -108,11 +108,17 @@
               <div class="dropdown-divider"></div>
             </li>
             <li>
+              <div class="dropdown-divider"></div>
+            </li>
+            <li>
               <div class="d-grid px-4 pt-2 pb-1">
-                <a href="@Url.Action("Logout", "Auth")" class="dropdown-item">
-                  <i class="ri-logout-box-line me-2"></i>
-                  <small class="align-middle">Logout</small>
-                </a>
+                <!-- SỬA: Dùng form POST thay vì link -->
+                <form method="post" action="@Url.Action("Logout", "Auth")" style="margin: 0;">
+                  <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start p-0" style="cursor: pointer;">
+                    <i class="ri-logout-box-line me-2"></i>
+                    <small class="align-middle">Logout</small>
+                  </button>
+                </form>
               </div>
             </li>
           </ul>

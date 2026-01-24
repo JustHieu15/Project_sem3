@@ -5,10 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0076cfeb-3894-49b4-877e-ffa1cc85da67" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/MyTask.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/AspnetCoreMvcStarter.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/AspnetCoreMvcStarter.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DepartmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DepartmentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiReportsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiTasksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiTasksController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250529042109_InitialCreate.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/20250529042109_InitialCreate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/KpiTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/KpiTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/MyReport.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/MyReport.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Delete.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Details.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Index.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/MyTasks.cshtml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Folder.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Folder.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Navbar/_NavbarPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Navbar/_NavbarPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_ContentNavbarLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_ContentNavbarLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Delete.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Edit.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,41 +51,58 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$APPLICATION_HOME_DIR$/lib/app.jar!/resources/html5-schema/html5/web-forms.rnc" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Context/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AdminBaseController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DashboardController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DepartmentController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/DepartmentController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/JobTypesController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiReportsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiTasksController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/KpiTasksController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/TaskDefinitionsController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Controllers/UserController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Extend/AuthAttribute.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Department.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/KpiTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Extend/AuthAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Extend/EnumExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Migrations/ApplicationDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Department.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/JobType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/KpiTask.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/MonthlyKpiReport.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/Priority.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskDefinition.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/TaskUpdate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UpdateStatus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/UserRole.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/EmployeeReportSummary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Models/ViewModel/ServiceRevenueViewModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/AccessDenied.cshtml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Auth/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Customers/CustomerDetailsNotifications.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Departments/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/FormLayouts/Vertical.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/FormValidation/Validation.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/JobTypes/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/JobTypes/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/JobTypes/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/JobTypes/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/MyReport.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/ReviewList.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiReports/TeamReport.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/KpiTasks/ReviewList.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Orders/OrderDetails.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_HorizontalMenu.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/Sections/Menu/_VerticalMenu.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -71,13 +113,20 @@
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_ContentNavbarLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_FrontLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/Shared/_ValidationScriptsPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/TaskDefinitions/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/TaskDefinitions/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/TaskDefinitions/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/TaskDefinitions/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/User/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_Partials/_Macros.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_Partials/_Modals/ModalCreateApp.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/Views/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AspnetCoreMvcStarter/package-lock.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -134,6 +183,19 @@
       <workItem from="1749430033274" duration="53000" />
       <workItem from="1749492650961" duration="9723000" />
       <workItem from="1749570812007" duration="5413000" />
+      <workItem from="1749603122544" duration="32000" />
+      <workItem from="1749728084215" duration="3073000" />
+      <workItem from="1749731246959" duration="2627000" />
+      <workItem from="1750160142370" duration="3997000" />
+      <workItem from="1750581068132" duration="17042000" />
+      <workItem from="1751097056139" duration="6973000" />
+      <workItem from="1751181195005" duration="5461000" />
+      <workItem from="1751195539311" duration="3492000" />
+      <workItem from="1751905184533" duration="17528000" />
+      <workItem from="1754683792512" duration="1434000" />
+      <workItem from="1764598591654" duration="6225000" />
+      <workItem from="1769243260266" duration="525000" />
+      <workItem from="1769297201895" duration="310000" />
     </task>
     <servers />
   </component>

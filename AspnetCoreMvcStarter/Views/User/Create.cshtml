@@ -11,37 +11,30 @@
             <h4 class="mb-0">Tạo Người Dùng Mới</h4>
         </div>
         <div class="card-body" style="margin-top: 20px;">
-            @if (TempData["Success"] != null)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    @TempData["Success"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
             @if (TempData["Error"] != null)
             {
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @TempData["Error"]
+                    @Html.Raw(TempData["Error"])
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
 
             <form asp-action="Create" method="post">
                 @Html.AntiForgeryToken()
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Name" class="form-label fw-semibold">Họ và Tên <span class="text-danger">*</span></label>
-                            <input asp-for="Name" class="form-control" required />
+                            <label asp-for="Name" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Name" class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
-                            <input asp-for="Email" type="email" class="form-control" required />
+                            <label asp-for="Email" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Email" type="email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
@@ -50,15 +43,16 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Password" class="form-label fw-semibold">Mật khẩu <span class="text-danger">*</span></label>
-                            <input asp-for="Password" type="password" class="form-control" required minlength="6" />
+                            <label asp-for="Password" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <input asp-for="Password" type="password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Role" class="form-label fw-semibold">Chức vụ <span class="text-danger">*</span></label>
-                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select" required>
+                            <label asp-for="Role" class="form-label fw-semibold"></label> <span class="text-danger">*</span>
+                            <!-- SỬA LẠI ĐỂ TỰ ĐỘNG TẠO DROPDOWN TỪ ENUM -->
+                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()" class="form-select">
                                 <option value="">-- Chọn chức vụ --</option>
                             </select>
                             <span asp-validation-for="Role" class="text-danger"></span>
@@ -69,16 +63,16 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="DepartmentId" class="form-label fw-semibold">Phòng ban</label>
-                            <select asp-for="DepartmentId" asp-items="(SelectList)ViewBag.Departments" class="form-select">
-                                <option value="">-- Chọn phòng ban --</option>
-                            </select>
+                            <label asp-for="DepartmentId" class="form-label fw-semibold"></label>
+                            <!-- SỬA LẠI: BỎ OPTION THỦ CÔNG BÊN TRONG -->
+                            <!-- Controller đã thêm option mặc định vào ViewBag rồi -->
+                            <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-select"></select>
                             <span asp-validation-for="DepartmentId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
-                            <label asp-for="Phone" class="form-label fw-semibold">Số điện thoại</label>
+                            <label asp-for="Phone" class="form-label fw-semibold"></label>
                             <input asp-for="Phone" class="form-control" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
@@ -86,7 +80,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label asp-for="Address" class="form-label fw-semibold">Địa chỉ</label>
+                    <label asp-for="Address" class="form-label fw-semibold"></label>
                     <textarea asp-for="Address" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
@@ -95,7 +89,7 @@
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Tạo người dùng
                     </button>
-                    <a asp-action="Index" class="btn btn-secondary ms-2">
+                    <a asp-action="Index" class="btn btn-secondary">
                         <i class="fas fa-arrow-left"></i> Quay lại danh sách
                     </a>
                 </div>
@@ -103,7 +97,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

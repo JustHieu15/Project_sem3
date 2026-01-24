@@ -52,6 +52,62 @@ namespace AspnetCoreMvcStarter.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("AspnetCoreMvcStarter.Models.JobType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Color")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DefaultKpiPoints")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefaultRequiredDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
+
+                    b.HasIndex("DisplayOrder");
+
+                    b.HasIndex("IsActive");
+
+                    b.ToTable("JobTypes");
+                });
+
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.KpiTask", b =>
                 {
                     b.Property<int>("Id")
@@ -60,58 +116,63 @@ namespace AspnetCoreMvcStarter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovedByUserId")
+                    b.Property<int?>("ApproverId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ApprovedPoints")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssignedUserId")
+                    b.Property<int?>("AssignedUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DocumentNumber")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("DeadlineInDocument")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                    b.Property<string>("DetailedDescription")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("ProposedPoints")
+                    b.Property<int?>("JobTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RequiredDays")
+                    b.Property<int?>("LeaderApprovedPoints")
                         .HasColumnType("int");
 
-                    b.Property<string>("ResponsibleLeader")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int?>("MainDepartmentId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ReasonForIncompletion")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("RelatedDepartmentIds")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("TaskContent")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("TaskDefinitionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserProposedPoints")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ApprovedByUserId");
+                    b.HasIndex("ApproverId");
 
-                    b.HasIndex("AssignedUserId");
+                    b.HasIndex("JobTypeId");
+
+                    b.HasIndex("MainDepartmentId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("TaskDefinitionId");
+
+                    b.HasIndex("AssignedUserId", "Status");
 
                     b.ToTable("KpiTasks");
                 });
@@ -154,6 +215,39 @@ namespace AspnetCoreMvcStarter.Migrations
                         .IsUnique();
 
                     b.ToTable("MonthlyKpiReports");
+                });
+
+            modelBuilder.Entity("AspnetCoreMvcStarter.Models.TaskDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DefaultPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobTypeId");
+
+                    b.ToTable("TaskDefinitions");
                 });
 
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.TaskUpdate", b =>
@@ -245,20 +339,38 @@ namespace AspnetCoreMvcStarter.Migrations
 
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.KpiTask", b =>
                 {
-                    b.HasOne("AspnetCoreMvcStarter.Models.User", "ApprovedByUser")
+                    b.HasOne("AspnetCoreMvcStarter.Models.User", "Approver")
                         .WithMany("ApprovedTasks")
-                        .HasForeignKey("ApprovedByUserId")
+                        .HasForeignKey("ApproverId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AspnetCoreMvcStarter.Models.User", "AssignedUser")
                         .WithMany("AssignedTasks")
                         .HasForeignKey("AssignedUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("AspnetCoreMvcStarter.Models.JobType", null)
+                        .WithMany("KpiTasks")
+                        .HasForeignKey("JobTypeId");
+
+                    b.HasOne("AspnetCoreMvcStarter.Models.Department", "MainDepartment")
+                        .WithMany()
+                        .HasForeignKey("MainDepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("AspnetCoreMvcStarter.Models.TaskDefinition", "TaskDefinition")
+                        .WithMany("KpiTasks")
+                        .HasForeignKey("TaskDefinitionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ApprovedByUser");
+                    b.Navigation("Approver");
 
                     b.Navigation("AssignedUser");
+
+                    b.Navigation("MainDepartment");
+
+                    b.Navigation("TaskDefinition");
                 });
 
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.MonthlyKpiReport", b =>
@@ -270,6 +382,17 @@ namespace AspnetCoreMvcStarter.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AspnetCoreMvcStarter.Models.TaskDefinition", b =>
+                {
+                    b.HasOne("AspnetCoreMvcStarter.Models.JobType", "JobType")
+                        .WithMany("TaskDefinitions")
+                        .HasForeignKey("JobTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobType");
                 });
 
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.TaskUpdate", b =>
@@ -306,9 +429,21 @@ namespace AspnetCoreMvcStarter.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("AspnetCoreMvcStarter.Models.JobType", b =>
+                {
+                    b.Navigation("KpiTasks");
+
+                    b.Navigation("TaskDefinitions");
+                });
+
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.KpiTask", b =>
                 {
                     b.Navigation("TaskUpdates");
+                });
+
+            modelBuilder.Entity("AspnetCoreMvcStarter.Models.TaskDefinition", b =>
+                {
+                    b.Navigation("KpiTasks");
                 });
 
             modelBuilder.Entity("AspnetCoreMvcStarter.Models.User", b =>

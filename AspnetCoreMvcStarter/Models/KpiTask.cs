@@ -1,54 +1,56 @@
+// Models/KpiTask.cs
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace AspnetCoreMvcStarter.Models
 {
-  public class KpiTask
+    public class KpiTask
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        [Display(Name = "Nội dung công việc")]
-        public string TaskContent { get; set; }
+        // --- ĐÃ THAY ĐỔI: LIÊN KẾT TỚI CÔNG VIỆC MẪU ---
+        [Required(ErrorMessage = "Vui lòng chọn một công việc")]
+        [Display(Name = "Công việc")]
+        public int TaskDefinitionId { get; set; }
 
-        [Required]
-        [Display(Name = "Số văn bản/ngày Email giao nhiệm vụ")]
-        public int DocumentNumber { get; set; }
+        // --- CÁC TRƯỜNG CHI TIẾT DO CHUYÊN VIÊN NHẬP - GIỮ NGUYÊN ---
+        [StringLength(1000)]
+        [Display(Name = "Mô tả chi tiết công việc (*)")]
+        public string? DetailedDescription { get; set; }
 
-        [Required]
-        [Display(Name = "Số ngày yêu cầu hoàn thành")]
-        public int RequiredDays { get; set; }
+        [Display(Name = "Người thực hiện")]
+        public int? AssignedUserId { get; set; }
 
-        [Required]
-        [Display(Name = "Thời gian bắt đầu")]
+        [Display(Name = "Lãnh đạo duyệt (*)")]
+        public int? ApproverId { get; set; }
+
+        [Display(Name = "Điểm tự chấm")]
+        [Range(0, 100, ErrorMessage = "Điểm phải từ 0 đến 100")]
+        public int? UserProposedPoints { get; set; }
+
+        [Display(Name = "Điểm được duyệt (Lãnh đạo)")]
+        [Range(0, 100, ErrorMessage = "Điểm phải từ 0 đến 100")]
+        public int? LeaderApprovedPoints { get; set; }
+
+        [Display(Name = "Hạn HT giao trong VB")]
         [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        public DateTime? DeadlineInDocument { get; set; }
 
-        [Required]
-        [Display(Name = "Thời gian kết thúc")]
-        [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        [Display(Name = "Kết quả công việc (*)")]
+        public TaskStatus Status { get; set; } = TaskStatus.InProgress;
 
-        [Required]
-        [Display(Name = "Số điểm đề xuất")]
-        public int ProposedPoints { get; set; }
+        [StringLength(1000)]
+        [Display(Name = "Lý do chưa hoàn thành (*)")]
+        public string? ReasonForIncompletion { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Lãnh đạo phụ trách")]
-        public string ResponsibleLeader { get; set; }
+        [Display(Name = "Đơn vị chủ trì (*)")]
+        public int? MainDepartmentId { get; set; }
 
-        [Display(Name = "Trạng thái")]
-        public TaskStatus Status { get; set; } = TaskStatus.Pending;
-
-        [Display(Name = "Điểm KPI được duyệt")]
-        public int? ApprovedPoints { get; set; }
-
-        [Display(Name = "Ghi chú")]
-        [StringLength(500)]
-        public string? Notes { get; set; }
+        [Display(Name = "Đơn vị liên quan")]
+        public string? RelatedDepartmentIds { get; set; }
 
         [Display(Name = "Ngày tạo")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
@@ -56,22 +58,19 @@ namespace AspnetCoreMvcStarter.Models
         [Display(Name = "Ngày cập nhật")]
         public DateTime? UpdatedDate { get; set; }
 
-        // Foreign Key
-        [Required]
-        [Display(Name = "Người thực hiện")]
-        public int AssignedUserId { get; set; }
+        // --- NAVIGATION PROPERTIES ---
+        [ForeignKey("TaskDefinitionId")]
+        public virtual TaskDefinition TaskDefinition { get; set; }
 
-        [Display(Name = "Người duyệt")]
-        public int? ApprovedByUserId { get; set; }
-
-        // Navigation Properties
         [ForeignKey("AssignedUserId")]
-        public virtual User AssignedUser { get; set; }
+        public virtual User? AssignedUser { get; set; }
 
-        [ForeignKey("ApprovedByUserId")]
-        public virtual User? ApprovedByUser { get; set; }
+        [ForeignKey("ApproverId")]
+        public virtual User? Approver { get; set; }
 
-        // Relationship with task updates
+        [ForeignKey("MainDepartmentId")]
+        public virtual Department? MainDepartment { get; set; }
+
         public virtual ICollection<TaskUpdate> TaskUpdates { get; set; } = new List<TaskUpdate>();
     }
 }

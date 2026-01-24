@@ -1,0 +1,41 @@
+@model AspnetCoreMvcStarter.Models.TaskDefinition
+
+@{
+  ViewData["Title"] = "Xác nhận Xóa";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<h5 class="text-danger">Bạn có chắc chắn muốn xóa danh mục công việc này không?</h5>
+<p class="text-danger">Lưu ý: Hành động này không thể hoàn tác. Nếu có công việc nào đang sử dụng danh mục này, bạn sẽ không thể xóa.</p>
+
+<div class="card">
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.Name)
+      </dt>
+      <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Name)
+      </dd>
+      <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.Description)
+      </dt>
+      <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Description)
+      </dd>
+      <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.JobType)
+      </dt>
+      <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.JobType.Name)
+      </dd>
+    </dl>
+
+    <form asp-action="Delete">
+      <input type="hidden" asp-for="Id" />
+      <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" />
+      <a asp-action="Index" class="btn btn-secondary ms-2">Hủy</a>
+    </form>
+  </div>
+</div>

@@ -1,9 +1,11 @@
 @model IEnumerable<AspnetCoreMvcStarter.Models.User>
 @using AspnetCoreMvcStarter.Models
+@using AspnetCoreMvcStarter.Extend
+@using System.ComponentModel.DataAnnotations
 
 @{
     ViewData["Title"] = "User List";
-    var currentUserRole = HttpContext.Session.GetString("UserRole");
+    var currentUserRole = Context.Session.GetString("UserRole");
 }
 
 <div class="container mt-4">

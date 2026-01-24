@@ -1,0 +1,102 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.KpiTask>
+@using AspnetCoreMvcStarter.Extend
+
+@{
+    ViewData["Title"] = "Duyệt Công Việc Nhân Viên";
+    int selectedMonth = (int)(ViewData["SelectedMonth"] ?? DateTime.Now.Month);
+    int selectedYear = (int)(ViewData["SelectedYear"] ?? DateTime.Now.Year);
+}
+
+<h4>@ViewData["Title"]</h4>
+<p>
+    Trang này cho phép lãnh đạo xem, kiểm tra và duyệt các công việc của chuyên viên.
+</p>
+
+<!-- Form Lọc -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form asp-action="ReviewList" method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="employeeId" class="form-label">Chọn chuyên viên</label>
+                <select name="employeeId" class="form-select" asp-items="ViewBag.EmployeeId">
+                    <option value="">-- Tất cả chuyên viên --</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="month" class="form-label">Tháng</label>
+                <select name="month" class="form-select">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i" selected="@(i == selectedMonth)">Tháng @i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="year" class="form-label">Năm</label>
+                <input type="number" name="year" value="@selectedYear" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="ri-filter-3-line me-1"></i> Lọc
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bảng kết quả -->
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Tên Công Việc</th>
+                    <th>Người Thực Hiện</th>
+                    <th>Ngày Tạo</th>
+                    <th>Trạng Thái</th>
+                    <th>Điểm Tự Chấm</th>
+                    <th>Điểm Duyệt</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.TaskDefinition.Name</strong></td>
+                            <td>@item.AssignedUser.Name</td>
+                            <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span class="badge bg-label-@item.Status.ToString().ToLower()">@item.Status.GetDisplayName()</span>
+                            </td>
+                            <td>
+                                @(item.UserProposedPoints?.ToString() ?? "N/A")
+                            </td>
+                            <td>
+                                @(item.LeaderApprovedPoints?.ToString() ?? "Chưa chấm")
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">
+                                    Duyệt / Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-4">Không tìm thấy công việc nào phù hợp với bộ lọc.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    </script>
+}

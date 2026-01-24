@@ -1,9 +1,11 @@
 @model AspnetCoreMvcStarter.Models.User
 @using AspnetCoreMvcStarter.Models
+@using AspnetCoreMvcStarter.Extend
+@using System.ComponentModel.DataAnnotations
 
 @{
     ViewData["Title"] = "Edit User";
-    var currentUserRole = HttpContext.Session.GetString("UserRole");
+    var currentUserRole = Context.Session.GetString("UserRole");
 }
 
 <div class="container mt-4">
@@ -119,6 +121,3 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

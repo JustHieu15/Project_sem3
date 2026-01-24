@@ -1,0 +1,42 @@
+@model IEnumerable<AspnetCoreMvcStarter.Models.KpiTask>
+@using AspnetCoreMvcStarter.Extend
+@{ ViewData["Title"] = "Công việc của tôi"; }
+
+<h4>@ViewData["Title"]</h4>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo công việc mới</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Tên Công việc</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Ngày cập nhật</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TaskDefinition.Name)</td>
+                <td>
+                    <span class="badge bg-@item.Status.ToString().ToLower()">@item.Status.GetDisplayName()</span>
+                </td>
+                <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                <td>@(item.UpdatedDate?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa cập nhật")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Chi tiết / Cập nhật</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="5" class="text-center">Bạn không có công việc nào.</td></tr>
+    }
+    </tbody>
+</table>

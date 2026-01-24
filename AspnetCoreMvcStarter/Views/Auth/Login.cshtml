@@ -17,16 +17,16 @@
             <div class="card p-7">
                 <!-- Logo -->
                 <div class="app-brand justify-content-center mt-5">
-                    <a href="/" class="app-brand-link gap-3">
-                        <span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
-                        <span class="app-brand-text demo text-heading fw-semibold">@TempData.Peek("appName")</span>
+                    <a href="/" class="app-brand-link">
+                      @* <span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span> *@
+                      @* <span class="app-brand-logo demo"><img src="https://upload.wikimedia.org/wikipedia/vi/6/65/VNPT_Logo.svg" alt="" style="width: 70%; text-align: center;"></span> *@
+                      <img src="https://upload.wikimedia.org/wikipedia/vi/6/65/VNPT_Logo.svg" alt="" style="width: 100%; text-align: center;">
                     </a>
                 </div>
                 <!-- /Logo -->
 
                 <div class="card-body mt-1">
-                    <h4 class="mb-1">Welcome to @TempData.Peek("appName")! 👋🏻</h4>
-                    <p class="mb-5">Please sign in to your account and start the adventure</p>
+                    <h4 class="mb-1">Welcome to VNPT !👋🏻</h4>
 
                     @if (ViewBag.Error != null)
                     {
